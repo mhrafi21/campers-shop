@@ -5,23 +5,20 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1" }),
   tagTypes: ["Products", "Carts"],
   endpoints: (builder) => ({
-
     createProduct: builder.mutation({
-        query: (product) => {
-          console.log(product)
-          return {
-            url: "/products/create-product",
-            method: "POST",
-            body: product,
-          }
-        },
-        invalidatesTags: [{ type: "Products", id: "LIST" }],
-  
+      query: (product) => {
+        console.log(product);
+        return {
+          url: "/products/create-product",
+          method: "POST",
+          body: product,
+        };
+      },
+      invalidatesTags: [{ type: "Products", id: "LIST" }],
     }),
 
     getProducts: builder.query({
       query: (params) => {
-  
         return {
           url: "/products",
           method: "GET",
@@ -37,6 +34,29 @@ export const baseApi = createApi({
       }),
       providesTags: (result, error, id) => [{ type: "Products", id }],
     }),
+    updateProductById: builder.mutation({
+      query: ({ productId, ...product }) => ({
+        url: `/products/${productId}`,
+        method: "PUT",
+        body: product,
+      }),
+      invalidatesTags: (result, error, { _id }) => [
+        { type: "Products", id: _id },
+      ],
+    }),
+
+    deleteSingleProduct: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/products/${id}`,
+          method: "DELETE"
+        }
+      },
+      invalidatesTags: (result, error, { _id }) => [{ type: "Products", id: _id }],
+    })
+
+    ,
+
     createCartProduct: builder.mutation({
       query: (product) => {
         return {
@@ -69,7 +89,7 @@ export const baseApi = createApi({
           url: `/carts`,
           method: "PUT",
           body: cart,
-        }
+        };
       },
       invalidatesTags: (result, error, { _id }) => [{ type: "Carts", id: _id }],
     }),
@@ -80,6 +100,8 @@ export const {
   useCreateProductMutation,
   useGetProductsQuery,
   useGetProductByIdQuery,
+  useUpdateProductByIdMutation,
+  useDeleteSingleProductMutation,
   useCreateCartProductMutation,
   useGetAllCartsQuery,
   useDeleteCartMutation,

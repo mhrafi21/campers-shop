@@ -2,16 +2,15 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { TProduct } from "../../interfaces";
 import { useCreateProductMutation } from "../../redux/baseApi";
+import toast from "react-hot-toast";
 
 interface Props {
   onClose: () => void;
 }
 
 const AddProductsModal: React.FC<Props> = ({ onClose }) => {
-
-    const [addCreateProduct, {data, error, isLoading}] = useCreateProductMutation(undefined);
-
-
+  const [addCreateProduct, { data, error, isLoading }] =
+    useCreateProductMutation(undefined);
 
   const {
     register,
@@ -30,28 +29,26 @@ const AddProductsModal: React.FC<Props> = ({ onClose }) => {
   ];
 
   const onSubmit = async (data: TProduct) => {
+    if (error) {
+      console.error("Error creating product:", error);
+      return;
+    }
 
+    const createProduct = {
+      name: data?.name,
+      price: Number(data?.price),
+      stockQuantity: Number(data?.stockQuantity),
+      category: data?.category,
+      ratings: Number(data?.ratings),
+      images: (data?.images || "").split(",").map((url: string) => url.trim()),
+      description: data?.description,
+    };
 
-   if (error) {
-    console.error("Error creating product:", error);
-    return;
-  }
-
-   const createProduct = {
-    name: data?.name,
-    price: Number(data?.price),
-    stockQuantity: Number(data?.stockQuantity),
-    category: data?.category,
-    ratings: Number(data?.ratings),
-    images: (data?.images || "").split(",").map((url: string) => url.trim()),
-    description: data?.description,
-   }
-   
-   console.log(createProduct);
-
-   const res = await addCreateProduct(createProduct);
-
-   console.log(res);
+    const res = await addCreateProduct(createProduct);
+    if (res?.data?.success === true) {
+      toast.success(`${res?.data?.message}`);
+      return;
+    }
 
     onClose(); // Close modal after submission
   };

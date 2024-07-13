@@ -2,44 +2,50 @@ import React, { useState } from "react";
 import UpdateProductModal from "./UpdateProductModal";
 import AddProductsModal from "./AddProductsModal";
 import DefaultContainer from "../../components/DefaultContainer";
+import { TProduct } from "../../interfaces";
+import { useDeleteSingleProductMutation } from "../../redux/baseApi";
+import Swal from "sweetalert2";
 
-
-
-const ProductManagement: React.FC<{Products: TProduct}> = ({ products }) => {
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [productIdToDelete, setProductIdToDelete] = useState<number | null>(
-    null
-  );
+const ProductManagement: React.FC<{ Products: TProduct }> = ({ products }) => {
+  const [deleteProduct] = useDeleteSingleProductMutation(undefined);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [productIdToUpdate, setProductIdToUpdate] = useState<number | null>(
     null
   );
   const [isCreating, setIsCreating] = useState<boolean>(false);
 
-  const handleDeleteProduct = (productId: number) => {
-    setProductIdToDelete(productId);
-    setIsDeleting(true);
+  const handleDeleteProduct = async (productId: string) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        const res = await deleteProduct(productId).unwrap();
+        console.log(res)
+        if (res?.success === true) {
+          Swal.fire("Deleted!", `${res?.message}`, "success");
+        }
+      }
+    } catch (error) {
+      Swal.fire(
+        "Failed!",
+        "There was a problem deleting your product.",
+        "error"
+      );
+      console.error("Failed to delete product:", error);
+    }
   };
 
-  const confirmDeleteProduct = () => {
-    // Perform delete logic here (e.g., API call, state update)
-    // For demonstration, let's log the delete action
-    console.log(`Deleting product with ID: ${productIdToDelete}`);
-
-    // Reset delete state
-    setIsDeleting(false);
-    setProductIdToDelete(null);
-  };
-
-  const cancelDeleteProduct = () => {
-    // Reset delete state
-    setIsDeleting(false);
-    setProductIdToDelete(null);
-  };
-
-  const handleDeleteImage = (productId: number, imageIndex: number) => {
+  const handleDeleteImage = (imageUrl : string) => {
     // Perform delete image logic here (e.g., update state)
-    console.log(`Deleting image ${imageIndex} of product ${productId}`);
+    console.log(imageUrl);
     // Update product images state accordingly
   };
 
@@ -61,17 +67,19 @@ const ProductManagement: React.FC<{Products: TProduct}> = ({ products }) => {
     setIsCreating(false);
   };
 
+  //   delete product;
+
   return (
     <DefaultContainer>
       <div className="container mx-auto my-8">
-    <div className="flex justify-end mb-6">
-    <button
-          className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded "
-          onClick={() => openCreateModal()}
-        >
-          Create Product
-        </button>
-    </div>
+        <div className="flex justify-end mb-6">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded "
+            onClick={() => openCreateModal()}
+          >
+            Create Product
+          </button>
+        </div>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300">
             <thead>
@@ -110,7 +118,7 @@ const ProductManagement: React.FC<{Products: TProduct}> = ({ products }) => {
                           />
                           <button
                             className="absolute top-0 right-0 bg-red-500 text-white rounded-full h-6 w-6 flex items-center justify-center"
-                            onClick={() => handleDeleteImage(product.id, index)}
+                            onClick={() => handleDeleteImage(image as string)}
                           >
                             &times;
                           </button>
@@ -128,7 +136,9 @@ const ProductManagement: React.FC<{Products: TProduct}> = ({ products }) => {
                       </button>
                       <button
                         className="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded"
-                        onClick={() => handleDeleteProduct(product.id)}
+                        onClick={() =>
+                          handleDeleteProduct(product._id as string)
+                        }
                       >
                         Delete
                       </button>
@@ -140,30 +150,6 @@ const ProductManagement: React.FC<{Products: TProduct}> = ({ products }) => {
           </table>
         </div>
         {/* Delete confirmation modal */}
-        {isDeleting && (
-          <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-            <div className="bg-white p-4 rounded shadow-md">
-              <p className="text-lg font-semibold">Confirm Delete?</p>
-              <p className="text-sm text-gray-700 mt-2">
-                Are you sure you want to delete this product?
-              </p>
-              <div className="flex justify-end mt-4">
-                <button
-                  className="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded mr-2"
-                  onClick={confirmDeleteProduct}
-                >
-                  Delete
-                </button>
-                <button
-                  className="bg-gray-300 hover:bg-gray-400 text-gray-800 py-1 px-2 rounded"
-                  onClick={cancelDeleteProduct}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
         {/* Update product modal */}
         {isUpdating && (
           <UpdateProductModal

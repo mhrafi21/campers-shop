@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useGetProductByIdQuery } from "../../redux/baseApi";
+import { useGetProductByIdQuery, useUpdateProductByIdMutation } from "../../redux/baseApi";
 import { TProduct } from "../../interfaces";
 
 interface Props {
@@ -18,7 +18,8 @@ const categories = [
 ];
 
 const UpdateProductModal: React.FC<Props> = ({ productId, onClose }) => {
-  console.log(productId);
+  
+    const [addToUpdate] = useUpdateProductByIdMutation(undefined)
 
   const { data, isLoading } = useGetProductByIdQuery(productId!, {
     skip: !productId,
@@ -30,12 +31,11 @@ const UpdateProductModal: React.FC<Props> = ({ productId, onClose }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: TProduct) => {
     try {
-      console.log("Updating product:", data);
 
       const updateProduct = {
-        name: data?.productName,
+        name: data?.name,
         price: Number(data?.price),
         stockQuantity: Number(data?.stockQuantity),
         description: data?.description,
@@ -44,7 +44,9 @@ const UpdateProductModal: React.FC<Props> = ({ productId, onClose }) => {
         images: data?.images.split(","),
       };
 
-      console.log(updateProduct);
+      const res = await addToUpdate({productId, ...updateProduct}).unwrap();
+
+      console.log(res);
 
       // Reset form and close modal
       onClose();
