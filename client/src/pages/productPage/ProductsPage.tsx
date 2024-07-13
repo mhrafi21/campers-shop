@@ -11,6 +11,7 @@ import { RootState, AppDispatch } from "../../redux/store";
 import { useGetProductsQuery } from "../../redux/baseApi";
 import DefaultContainer from "../../components/DefaultContainer";
 import { TProduct } from "../../interfaces";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const ProductsPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -61,9 +62,7 @@ const ProductsPage: React.FC = () => {
       case "101-200":
         dispatch(setPriceRange({ min: 101, max: 200 }));
         break;
-      // Add more ranges as needed
       default:
-        // Handle default case
         break;
     }
   };
@@ -158,7 +157,12 @@ const ProductsPage: React.FC = () => {
                 <h2 className="text-lg font-semibold">{product.name}</h2>
                 <p className="text-gray-600 mb-2">{product.description}</p>
                 <p className="text-lg font-bold">${product.price}</p>
-                {/* View Details button ... */}
+                <Link
+                  to={`/product/${product._id}`}
+                  className="text-blue-500 hover:underline"
+                >
+                  View Details
+                </Link>
               </div>
             </div>
           ))}
