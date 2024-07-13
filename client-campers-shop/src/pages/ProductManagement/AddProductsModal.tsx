@@ -47,10 +47,11 @@ const AddProductsModal: React.FC<Props> = ({ onClose }) => {
     const res = await addCreateProduct(createProduct);
     if (res?.data?.success === true) {
       toast.success(`${res?.data?.message}`);
+      onClose();
       return;
     }
 
-    onClose(); // Close modal after submission
+     // Close modal after submission
   };
 
   return (

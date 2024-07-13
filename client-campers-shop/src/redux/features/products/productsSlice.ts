@@ -1,28 +1,28 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Product } from '../../types'; // Define Product type as per your backend model
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TProduct } from "../../../interfaces";
 
 interface ProductsState {
-  products: Product[];
+  products: TProduct[];
   loading: boolean;
   error: string | null;
   searchQuery: string;
   selectedCategory: string;
   priceRange: { min: number; max: number };
-  sortBy: 'asc' | 'desc';
+  sortBy: "asc" | "desc";
 }
 
 const initialState: ProductsState = {
   products: [],
   loading: false,
   error: null,
-  searchQuery: '',
-  selectedCategory: '',
-  priceRange: { min: 0, max: 1000 },
-  sortBy: 'asc',
+  searchQuery: "",
+  selectedCategory: "",
+  priceRange: { min: 0, max: 10000000 },
+  sortBy: "asc",
 };
 
 const productsSlice = createSlice({
-  name: 'products',
+  name: "products",
   initialState,
   reducers: {
     setSearchQuery(state, action: PayloadAction<string>) {
@@ -34,14 +34,14 @@ const productsSlice = createSlice({
     setPriceRange(state, action: PayloadAction<{ min: number; max: number }>) {
       state.priceRange = action.payload;
     },
-    setSortBy(state, action: PayloadAction<'asc' | 'desc'>) {
+    setSortBy(state, action: PayloadAction<"asc" | "desc">) {
       state.sortBy = action.payload;
     },
     clearFilters(state) {
-      state.searchQuery = '';
-      state.selectedCategory = '';
-      state.priceRange = { min: 0, max: 1000 };
-      state.sortBy = 'asc';
+      state.searchQuery = "";
+      state.selectedCategory = "";
+      state.priceRange = { min: 0, max: 10000000 };
+      state.sortBy = "asc";
     },
   },
 });

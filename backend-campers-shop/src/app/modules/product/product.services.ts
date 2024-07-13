@@ -9,7 +9,7 @@ const createProductIntoDB = async (payload: TProduct) => {
 }
 
 const getProductsFromDB = async (query: Record<string, unknown>) => {
-  console.log(query);
+
   try {
     const { search, category, minPrice, maxPrice, sort } = query;
 
@@ -62,7 +62,7 @@ const getProductsFromDB = async (query: Record<string, unknown>) => {
 }
 
 const getSingleProductFromDB = async (productId: string) => {
-  console.log(productId);
+  
   const result = await Product.findById(productId);
   if (!result) {
     throw new AppError(httpStatus.NOT_FOUND, 'No data found')
