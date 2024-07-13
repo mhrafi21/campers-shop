@@ -62,6 +62,7 @@ const getProductsFromDB = async (query: Record<string, unknown>) => {
 }
 
 const getSingleProductFromDB = async (productId: string) => {
+  console.log(productId);
   const result = await Product.findById(productId);
   if (!result) {
     throw new AppError(httpStatus.NOT_FOUND, 'No data found')
