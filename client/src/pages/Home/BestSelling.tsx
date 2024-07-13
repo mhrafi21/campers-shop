@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import img from "../../assets/images/hero.jpg"
 interface Product {
   id: number;
   name: string;
@@ -14,28 +14,28 @@ const bestSellingProducts: Product[] = [
     id: 1,
     name: 'Premium Camping Tent',
     price: '$249.99',
-    image: '/images/tent.jpg',
+    image: img,
     description: 'High-quality tent for all weather conditions.',
   },
   {
     id: 2,
     name: 'Insulated Sleeping Bag',
     price: '$129.99',
-    image: '/images/sleeping-bag.jpg',
+    image: img,
     description: 'Keep warm and comfortable during cold nights.',
   },
   {
     id: 3,
     name: 'Portable Camping Stove',
     price: '$79.99',
-    image: '/images/stove.jpg',
+    image: img,
     description: 'Compact stove for cooking outdoors.',
   },
   {
     id: 4,
     name: 'Outdoor Backpack',
     price: '$149.99',
-    image: '/images/backpack.jpg',
+    image: img,
     description: 'Durable backpack for all your adventure essentials.',
   },
 ];

@@ -5,6 +5,7 @@ import { TCart } from './cart.interface'
 import Cart from './cart.model'
 
 const createCartIntoDB = async (payload: TCart) => {
+  
   try {
     const product = await Product.findById(payload.product)
 

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import img from "../../assets/images/hero.jpg"
 interface TourGroup {
   id: number;
   title: string;
@@ -13,21 +13,21 @@ const tourGroups: TourGroup[] = [
     id: 1,
     title: 'Adventure Seekers',
     description: 'Join our Adventure Seekers group for thrilling experiences in the wild.',
-    imageUrl: '/images/adventure.jpg',
+    imageUrl: img,
     link: '/tour-groups/adventure-seekers',
   },
   {
     id: 2,
     title: 'Family Camping',
     description: 'Perfect for families looking to create unforgettable camping memories.',
-    imageUrl: '/images/family.jpg',
+    imageUrl: img,
     link: '/tour-groups/family-camping',
   },
   {
     id: 3,
     title: 'Solo Explorers',
     description: 'Embark on a solo journey with like-minded explorers across scenic routes.',
-    imageUrl: '/images/solo.jpg',
+    imageUrl: img,
     link: '/tour-groups/solo-explorers',
   },
 ];

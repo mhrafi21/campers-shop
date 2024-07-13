@@ -9,49 +9,56 @@ const createProductIntoDB = async (payload: TProduct) => {
 }
 
 const getProductsFromDB = async (query: Record<string, unknown>) => {
-  const { search, category, minPrice, maxPrice, sort } = query
+  console.log(query);
+  try {
+    const { search, category, minPrice, maxPrice, sort } = query;
 
-  let filterQuery = {}
+    let filterQuery = {};
 
-  //   searching product using product name or description;
-  if (search) {
-    filterQuery = {
-      $or: [
-        { name: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
-      ],
-    }
-  }
-
-  //   filter by price - min to max;
-  if (minPrice || maxPrice) {
-    if (minPrice && !maxPrice) {
-      filterQuery = { price: { $gte: Number(minPrice) } }
-    }
-    if (!minPrice && maxPrice) {
-      filterQuery = { price: { $lte: Number(maxPrice) } }
-    }
-    if (minPrice && maxPrice) {
+    // Searching product using product name or description
+    if (search) {
       filterQuery = {
-        price: { $gte: Number(minPrice), $lte: Number(maxPrice) },
+        $or: [
+          { name: { $regex: search, $options: 'i' } },
+          { description: { $regex: search, $options: 'i' } },
+        ],
+      };
+    }
+
+    // Filter by price - min to max
+    if (minPrice || maxPrice) {
+      if (minPrice && !maxPrice) {
+        filterQuery = { ...filterQuery, price: { $gte: Number(minPrice) } };
+      }
+      if (!minPrice && maxPrice) {
+        filterQuery = { ...filterQuery, price: { $lte: Number(maxPrice) } };
+      }
+      if (minPrice && maxPrice) {
+        filterQuery = {
+          ...filterQuery,
+          price: { $gte: Number(minPrice), $lte: Number(maxPrice) },
+        };
       }
     }
+
+    // Filter by category
+    if (category) {
+      filterQuery = { ...filterQuery, category };
+    }
+
+    // Sorting the products by price
+    let sortOption = {};
+
+    if (sort) {
+      sortOption = sort === 'asc' ? { price: 1 } : { price: -1 };
+    }
+
+    const products = await Product.find(filterQuery).sort(sortOption);
+    return products
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    
   }
-
-  // filter by category;
-  if (category) {
-    filterQuery = { category: category }
-  }
-
-  // sorting the products by price;
-  let sortOption = {}
-
-  if (sort) {
-    sortOption = sort == 'asc' ? { price: 1 } : { price: -1 }
-  }
-
-  const result = await Product.find(filterQuery).sort(sortOption);
-  return result
 }
 
 const getSingleProductFromDB = async (productId: string) => {

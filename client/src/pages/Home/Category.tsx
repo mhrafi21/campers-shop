@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import img from "../../assets/images/hero.jpg"
 interface Category {
   id: number;
   name: string;
@@ -9,7 +9,7 @@ interface Category {
 }
 
 const categories: Category[] = [
-  { id: 1, name: 'Tents', icon: '/icons/tent-icon.svg', link: '/category/tents' },
+  { id: 1, name: 'Tents', icon: img, link: '/category/tents' },
   { id: 2, name: 'Backpacks', icon: '/icons/backpack-icon.svg', link: '/category/backpacks' },
   { id: 3, name: 'Cookware', icon: '/icons/cookware-icon.svg', link: '/category/cookware' },
   { id: 4, name: 'Sleeping Bags', icon: '/icons/sleeping-bag-icon.svg', link: '/category/sleeping-bags' },

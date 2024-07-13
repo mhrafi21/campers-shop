@@ -13,7 +13,7 @@ const CartProduct: React.FC<{ cartItem: TProduct }> = ({ cartItem }) => {
   const [updateQuantity, { isLoading }] = useUpdateCartMutation(undefined);
 
   const increaseQuantity = async (id: string) => {
-    console.log(id);
+   
     try {
       if (
         cartItem?.product.stockQuantity > 0 &&
@@ -78,6 +78,8 @@ const CartProduct: React.FC<{ cartItem: TProduct }> = ({ cartItem }) => {
     }
   };
 
+ 
+
   return (
     <div className="flex flex-col">
       <div className="border rounded-lg p-4 mb-4 flex flex-col md:flex-row">
@@ -109,14 +111,14 @@ const CartProduct: React.FC<{ cartItem: TProduct }> = ({ cartItem }) => {
           <div className="flex items-center mt-4">
             <button
               onClick={() => decreaseQuantity(cartItem._id)}
-              className={`bg-gray-300 px-2  py-1 rounded-lg`}
+              className={`bg-gray-300 px-2 ${isLoading && "opacity-40"} py-1 rounded-l`}
             >
               -
             </button>
             <span className="px-4">{cartItem.quantity}</span>
             <button
               onClick={() => increaseQuantity(cartItem._id)}
-              className="bg-gray-300 px-2 py-1 rounded-r"
+              className={`bg-gray-300 px-2 ${isLoading && "opacity-40"} py-1 rounded-r`}
             >
               +
             </button>

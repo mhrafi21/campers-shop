@@ -1,84 +1,103 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FormEvent, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   setSearchQuery,
   setSelectedCategory,
   setPriceRange,
   setSortBy,
   clearFilters,
-} from '../../redux/features/products/productsSlice';
-import { RootState, AppDispatch } from '../../redux/store';
-import { useGetProductsQuery } from '../../redux/baseApi';
+} from "../../redux/features/products/productsSlice";
+import { RootState, AppDispatch } from "../../redux/store";
+import { useGetProductsQuery } from "../../redux/baseApi";
+import DefaultContainer from "../../components/DefaultContainer";
+import { TProduct } from "../../interfaces";
 
 const ProductsPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  // Selector functions should be outside the component body
-  const searchQuery = useSelector((state: RootState) => state.products.searchQuery);
-  const selectedCategory = useSelector((state: RootState) => state.products.selectedCategory);
-  const minPrice = useSelector((state: RootState) => state.products.priceRange.min.toString());
-  const maxPrice = useSelector((state: RootState) => state.products.priceRange.max.toString());
+  const searchQuery = useSelector(
+    (state: RootState) => state.products.searchQuery
+  );
+  const selectedCategory = useSelector(
+    (state: RootState) => state.products.selectedCategory
+  );
+  const priceRange = useSelector((state: RootState) => state.products.priceRange);
   const sortBy = useSelector((state: RootState) => state.products.sortBy);
 
   const {
     data: products,
-    error,
     isLoading,
-    refetch, // Optional: If you need to manually refetch data
   } = useGetProductsQuery({
     search: searchQuery,
     category: selectedCategory,
-    minPrice: minPrice,
-    maxPrice: maxPrice,
+    minPrice: priceRange.min.toString(),
+    maxPrice: priceRange.max.toString(),
     sort: sortBy,
   });
 
-  console.log(products)
-
-  // Event handlers
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchQuery(event.target.value));
+  const handleSearchChange = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const target = event.target as typeof event.target & {
+      search: { value: string };
+    };
+    dispatch(setSearchQuery(target.search.value));
   };
 
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     dispatch(setSelectedCategory(event.target.value));
   };
 
-  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    dispatch(setPriceRange({ ...useSelector((state: RootState) => state.products.priceRange), [name]: Number(value) }));
+  const handlePriceRangeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = event.target;
+    switch (value) {
+      case "0-50":
+        dispatch(setPriceRange({ min: 0, max: 50 }));
+        break;
+      case "51-100":
+        dispatch(setPriceRange({ min: 51, max: 100 }));
+        break;
+      case "101-200":
+        dispatch(setPriceRange({ min: 101, max: 200 }));
+        break;
+      // Add more ranges as needed
+      default:
+        // Handle default case
+        break;
+    }
   };
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setSortBy(event.target.value as 'asc' | 'desc'));
+    dispatch(setSortBy(event.target.value as "asc" | "desc"));
   };
 
   const handleClearFilters = () => {
     dispatch(clearFilters());
   };
 
-  // useEffect example (if needed)
   useEffect(() => {
-    // Perform any side effects or initializations here
-    // For example, dispatch initial actions, fetch initial data, etc.
-  }, []); // Empty dependency array ensures it runs only once on component mount
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+    // Perform any initial actions here if needed
+  }, []);
 
   return (
     <div className="bg-gray-100 min-h-screen">
+      <DefaultContainer>
+        {isLoading && <div>Loading...</div>}
+      </DefaultContainer>
       <div className="container mx-auto py-8">
         {/* Filter controls */}
         <div className="flex flex-col md:flex-row md:justify-between items-center mb-8">
           {/* Search */}
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0"
-          />
+          <form onSubmit={handleSearchChange}>
+            <input
+              type="text"
+              placeholder="Search products..."
+              name="search"
+              className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0"
+            />
+            <button type="submit">Search</button>
+          </form>
 
           {/* Category */}
           <select
@@ -93,30 +112,22 @@ const ProductsPage: React.FC = () => {
           </select>
 
           {/* Price Range */}
-          <div className="flex items-center">
-            <input
-              type="number"
-              placeholder="Min Price"
-              name="min"
-              value={minPrice}
-              onChange={handlePriceChange}
-              className="p-2 border border-gray-300 rounded-l-md mr-2"
-            />
-            <input
-              type="number"
-              placeholder="Max Price"
-              name="max"
-              value={maxPrice}
-              onChange={handlePriceChange}
-              className="p-2 border border-gray-300 rounded-r-md mr-4"
-            />
-          </div>
+          <select
+            value={`${priceRange.min}-${priceRange.max}`}
+            onChange={handlePriceRangeChange}
+            className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0"
+          >
+            <option value="0-50">Up to $50</option>
+            <option value="51-100">$51 - $100</option>
+            <option value="101-200">$101 - $200</option>
+            {/* Add more ranges as needed */}
+          </select>
 
           {/* Sort By */}
           <select
             value={sortBy}
             onChange={handleSortChange}
-            className="p-2 border border-gray-300 rounded-md mr-4"
+            className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0"
           >
             <option value="asc">Price Low to High</option>
             <option value="desc">Price High to Low</option>
@@ -133,9 +144,16 @@ const ProductsPage: React.FC = () => {
 
         {/* Product grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products?.data?.map(product => (
-            <div key={product._id} className="bg-white rounded-lg overflow-hidden shadow-lg">
-              <img src={product.images[0]} alt={product.name} className="w-full h-48 object-cover object-center" />
+          {products?.data?.map((product: TProduct) => (
+            <div
+              key={product._id}
+              className="bg-white rounded-lg overflow-hidden shadow-lg"
+            >
+              <img
+                src={product.images[0]}
+                alt={product.name}
+                className="w-full h-48 object-cover object-center"
+              />
               <div className="p-4">
                 <h2 className="text-lg font-semibold">{product.name}</h2>
                 <p className="text-gray-600 mb-2">{product.description}</p>

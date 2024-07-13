@@ -13,14 +13,13 @@ const CartPage = () => {
     useUpdateCartMutation(undefined);
   const { data, isLoading, error } = useGetAllCartsQuery(undefined);
 
-  if (isLoading) return <div>Loading...</div>;
 
   const calculateTotalAmount = () => {
-    return data?.data.reduce(
+    return Number(data?.data.reduce(
       (total: number, item: TProduct) =>
         total + item.product.price * item.quantity,
       0
-    );
+    ).toFixed(2));
   };
 
   const totalAmount: number = calculateTotalAmount();
@@ -28,7 +27,8 @@ const CartPage = () => {
   return (
     <div>
       <DefaultContainer>
-        <h1>Cart Page</h1>
+        {isLoading && <div>Loading...</div>}
+        <h1 className="text-4xl font-bold py-5">Cart Page</h1>
         <div className="flex flex-col md:flex-row md:space-x-8">
           <div className="md:flex-[2]">
             {data?.data &&
@@ -44,7 +44,7 @@ const CartPage = () => {
               <div>
                 <span className="text-lg font-semibold">Total Amount:</span>
                 <span className="text-lg font-bold block mt-2">
-                  ${loading ? "Loading..." : totalAmount.toFixed(2)}
+                  ${loading ? "Loading..." : totalAmount}
                 </span>
               </div>
               <Link to={"/checkout"}>
