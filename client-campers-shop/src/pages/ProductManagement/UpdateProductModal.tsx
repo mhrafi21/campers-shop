@@ -4,7 +4,7 @@ import { useGetProductByIdQuery, useUpdateProductByIdMutation } from "../../redu
 import { TProduct } from "../../interfaces";
 
 interface Props {
-  productId: number | null;
+  productId: string | null;
   onClose: () => void;
 }
 
@@ -17,7 +17,7 @@ const categories = [
   "Outdoor Clothing",
 ];
 
-const UpdateProductModal: React.FC<Props> = ({ productId, onClose }) => {
+const UpdateProductModal: React.FC<Props> = ({ productId , onClose }) => {
   
     const [addToUpdate] = useUpdateProductByIdMutation(undefined)
 
@@ -40,7 +40,7 @@ const UpdateProductModal: React.FC<Props> = ({ productId, onClose }) => {
         description: data?.description,
         category: data?.category,
         ratings: Number(data?.ratings),
-        images: data?.images.split(","),
+        images: ([data?.images]?.join(',') || "").split(",").map((url: string) => url.trim()),
       };
 
       const res = await addToUpdate({productId, ...updateProduct}).unwrap();

@@ -9,8 +9,7 @@ interface Props {
 }
 
 const AddProductsModal: React.FC<Props> = ({ onClose }) => {
-  const [addCreateProduct, {  error }] =
-    useCreateProductMutation(undefined);
+  const [addCreateProduct, { error }] = useCreateProductMutation(undefined);
 
   const {
     register,
@@ -40,7 +39,9 @@ const AddProductsModal: React.FC<Props> = ({ onClose }) => {
       stockQuantity: Number(data?.stockQuantity),
       category: data?.category,
       ratings: Number(data?.ratings),
-      images: (data?.images || "").split(",").map((url: string) => url.trim()),
+      images: ([data?.images]?.join(",") || "")
+        .split(",")
+        .map((url: string) => url.trim()),
       description: data?.description,
     };
 
@@ -51,7 +52,7 @@ const AddProductsModal: React.FC<Props> = ({ onClose }) => {
       return;
     }
 
-     // Close modal after submission
+    // Close modal after submission
   };
 
   return (

@@ -2,7 +2,7 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useGetAllCartsQuery } from "../../redux/baseApi";
 import DefaultContainer from "../../components/DefaultContainer";
-import { TProduct } from "../../interfaces";
+import { TCartsProps} from "../../interfaces";
 import { useNavigate } from "react-router-dom";
 
 type UserDetails = {
@@ -26,7 +26,7 @@ const CheckoutForm: React.FC = () => {
     return Number(
       CartData?.data
         .reduce(
-          (total: number, item: TProduct) =>
+          (total: number, item: TCartsProps) =>
             total + item.product.price * item.quantity,
           0
         )

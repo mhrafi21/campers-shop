@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 import { CSSTransition } from 'react-transition-group';
 
+
+
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [ setIsScrolled] = useState(false);
+  const [ ,setIsScrolled] = useState(false);
   const [navHeight, setNavHeight] = useState(80); // Default height
 
   useEffect(() => {

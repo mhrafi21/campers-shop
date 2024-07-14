@@ -6,10 +6,10 @@ import { TProduct } from "../../interfaces";
 import { useDeleteSingleProductMutation } from "../../redux/baseApi";
 import Swal from "sweetalert2";
 
-const ProductManagement: React.FC<{ products: TProduct }> = ({ products }) => {
+const ProductManagement: React.FC<{ products: TProduct[] }> = ({ products }) => {
   const [deleteProduct] = useDeleteSingleProductMutation(undefined);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
-  const [productIdToUpdate, setProductIdToUpdate] = useState<number | null>(
+  const [productIdToUpdate, setProductIdToUpdate] = useState<string | null>(
     null
   );
   const [isCreating, setIsCreating] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const ProductManagement: React.FC<{ products: TProduct }> = ({ products }) => {
 
       if (result.isConfirmed) {
         const res = await deleteProduct(productId).unwrap();
-        console.log(res)
+
         if (res?.success === true) {
           Swal.fire("Deleted!", `${res?.message}`, "success");
         }
@@ -49,7 +49,7 @@ const ProductManagement: React.FC<{ products: TProduct }> = ({ products }) => {
     // Update product images state accordingly
   };
 
-  const openUpdateModal = (productId: number) => {
+  const openUpdateModal = (productId: string) => {
     setProductIdToUpdate(productId);
     setIsUpdating(true);
   };
@@ -95,7 +95,7 @@ const ProductManagement: React.FC<{ products: TProduct }> = ({ products }) => {
               </tr>
             </thead>
             <tbody>
-              {products?.map((product) => (
+              { products && products?.map((product: TProduct) => (
                 <tr key={product._id}>
                   <td className="py-2 px-4 border-b">{product.name}</td>
                   <td className="py-2 px-4 border-b">
@@ -130,7 +130,7 @@ const ProductManagement: React.FC<{ products: TProduct }> = ({ products }) => {
                     <div className="flex gap-2">
                       <button
                         className="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded"
-                        onClick={() => openUpdateModal(product._id)}
+                        onClick={() => openUpdateModal(product._id as string)}
                       >
                         Update
                       </button>

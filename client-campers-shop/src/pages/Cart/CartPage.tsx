@@ -1,25 +1,23 @@
 import React from "react";
 import DefaultContainer from "../../components/DefaultContainer";
-import {
-  useGetAllCartsQuery,
-  useUpdateCartMutation,
-} from "../../redux/baseApi";
+import { useGetAllCartsQuery } from "../../redux/baseApi";
 import CartProduct from "./CartProduct";
-import { TProduct } from "../../interfaces";
+import { TCartsProps } from "../../interfaces";
 import { Link } from "react-router-dom";
 
-const CartPage = () => {
-  const [updateQuantity, { isLoading: loading }] =
-    useUpdateCartMutation(undefined);
-  const { data, isLoading, error } = useGetAllCartsQuery(undefined);
-
+const CartPage: React.FC = () => {
+  const { data, isLoading } = useGetAllCartsQuery(undefined);
 
   const calculateTotalAmount = () => {
-    return Number(data?.data.reduce(
-      (total: number, item: TProduct) =>
-        total + item.product.price * item.quantity,
-      0
-    ).toFixed(2));
+    return Number(
+      data?.data
+        .reduce(
+          (total: number, item: TCartsProps) =>
+            total + item.product.price * item.quantity,
+          0
+        )
+        .toFixed(2)
+    );
   };
 
   const totalAmount: number = calculateTotalAmount();
@@ -32,7 +30,7 @@ const CartPage = () => {
         <div className="flex flex-col md:flex-row md:space-x-8">
           <div className="md:flex-[2]">
             {data?.data &&
-              data?.data?.map((cartItem: TProduct) => (
+              data?.data?.map((cartItem: TCartsProps) => (
                 <CartProduct
                   key={cartItem._id}
                   cartItem={cartItem}
@@ -44,7 +42,7 @@ const CartPage = () => {
               <div>
                 <span className="text-lg font-semibold">Total Amount:</span>
                 <span className="text-lg font-bold block mt-2">
-                  ${loading ? "Loading..." : totalAmount}
+                  ${totalAmount}
                 </span>
               </div>
               <Link to={"/checkout"}>

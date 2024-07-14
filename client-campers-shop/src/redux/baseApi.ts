@@ -1,5 +1,22 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+interface UpdateCartResponse {
+  success: boolean;
+  cartId?: string
+
+  // Add other properties as needed
+}
+
+// Update the UpdateCartMutationResult type definition
+export type UpdateCartMutationResult = {
+  data: UpdateCartResponse;
+
+} | {
+  error: unknown;
+};
+
+/// https://backend-campers-shop.vercel.app/api/v1
+
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1" }),

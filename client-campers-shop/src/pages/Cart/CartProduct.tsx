@@ -1,14 +1,17 @@
-import React, { useState } from "react";
-
-import { TProduct } from "../../interfaces";
+import React  from "react";
 import {
   useDeleteCartMutation,
   useUpdateCartMutation,
 } from "../../redux/baseApi";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { TCartsProps } from "../../interfaces";
 
-const CartProduct: React.FC<{ cartItem: TProduct }> = ({ cartItem }) => {
+
+
+
+
+const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
   const [deleteProduct] = useDeleteCartMutation(undefined);
   const [updateQuantity, { isLoading }] = useUpdateCartMutation(undefined);
 
@@ -23,10 +26,10 @@ const CartProduct: React.FC<{ cartItem: TProduct }> = ({ cartItem }) => {
           cartId: id,
           action: "increase",
           quantity: 1,
-        });
-       if(res?.error?.data?.success === false){
+        }).unwrap();
+       if(res?.success === false){
         toast.error("Not enough stock");
-       };
+       }
       } else {
         toast.error("No more stock");
       }
@@ -37,9 +40,9 @@ const CartProduct: React.FC<{ cartItem: TProduct }> = ({ cartItem }) => {
 
   const decreaseQuantity = async (id: string) => {
     try {
-      if (cartItem?.quantity > 1
+      if (cartItem?.quantity > 1 && cartItem.quantity > 1
         ) {
-        const res = await updateQuantity({
+         await updateQuantity({
           cartId: id,
           action: "decrease",
           quantity: 1,
@@ -52,7 +55,7 @@ const CartProduct: React.FC<{ cartItem: TProduct }> = ({ cartItem }) => {
 
   //   cart delete
 
-  const handleDelete = async (id: String) => {
+  const handleDelete = async (id: string) => {
     try {
       const result = await Swal.fire({
         title: "Are you sure?",

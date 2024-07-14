@@ -7,7 +7,7 @@ import {useGetProductsQuery } from '../../redux/baseApi';
 const App: React.FC = () => {
 
 
-  const {data,isLoading,refetch} = useGetProductsQuery(undefined);
+  const {data} = useGetProductsQuery(undefined);
 
   return (
     <div className="">

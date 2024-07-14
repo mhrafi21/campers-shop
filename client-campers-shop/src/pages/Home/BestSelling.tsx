@@ -1,9 +1,8 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import img from '../../assets/images/hero.jpg';
 import { useGetProductsQuery } from '../../redux/baseApi';
 import DefaultContainer from '../../components/DefaultContainer';
 import { TProduct } from '../../interfaces';
@@ -12,7 +11,7 @@ import { TProduct } from '../../interfaces';
 
 const BestSelling = () => {
 
-  const {data, isLoading} = useGetProductsQuery(undefined);
+  const {data} = useGetProductsQuery(undefined);
 
   console.log(data?.data);
 
@@ -54,7 +53,7 @@ const BestSelling = () => {
         <h2 className="text-3xl font-bold mb-8 text-center">Best Selling / Recommended Products</h2>
         <Slider {...settings}>
           {data?.data?.slice(0,20).map((product:TProduct) => (
-            <div key={product.id} className="p-2">
+            <div key={product._id} className="p-2">
               <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
           
 

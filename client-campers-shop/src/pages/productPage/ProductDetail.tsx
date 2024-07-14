@@ -1,10 +1,14 @@
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { TProduct } from "../../interfaces";
 
-const ProductDetail = ({ product }) => {
-  const sliderRef = useRef(null);
+
+
+
+const ProductDetail: React.FC<{product: TProduct}> = ({ product }) => {
+  const sliderRef = useRef<Slider>(null);
 
   const settings = {
     dots: true,
@@ -34,11 +38,11 @@ const ProductDetail = ({ product }) => {
     ],
   };
 
-  const handleThumbnailClick = (index) => {
+  const handleThumbnailClick = useCallback((index: number) => {
     if (sliderRef.current) {
       sliderRef.current.slickGoTo(index);
     }
-  };
+  }, []);
 
   return (
     <div className="mx-auto py-8 px-4 sm:px-6 lg:px-8">
