@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useGetProductByIdQuery, useUpdateProductByIdMutation } from "../../redux/baseApi";
 import { TProduct } from "../../interfaces";
 
@@ -29,11 +29,10 @@ const UpdateProductModal: React.FC<Props> = ({ productId, onClose }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<TProduct>();
 
-  const onSubmit = async (data: TProduct) => {
+  const onSubmit: SubmitHandler<TProduct> = async (data) => {
     try {
-
       const updateProduct = {
         name: data?.name,
         price: Number(data?.price),

@@ -29,7 +29,8 @@ const tourGroups: TourGroup[] = [
     description: 'Embark on a solo journey with like-minded explorers across scenic routes.',
     imageUrl: img,
     link: '/tour-groups/solo-explorers',
-  },
+  }
+  
 ];
 
 const TourGroupsSection: React.FC = () => {

@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import React, { useRef } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const ProductDetail = ({ product }) => {
   const sliderRef = useRef(null);
@@ -12,7 +12,7 @@ const ProductDetail = ({ product }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    fade:false,
+    fade: false,
     arrows: true,
     responsive: [
       {
@@ -41,8 +41,8 @@ const ProductDetail = ({ product }) => {
   };
 
   return (
-    <div className=" mx-auto py-8 px-4 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
+    <div className="mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <Slider {...settings} ref={sliderRef}>
             {product.images.map((image, index) => (
@@ -55,7 +55,7 @@ const ProductDetail = ({ product }) => {
               </div>
             ))}
           </Slider>
-          <div className="flex mt-4 space-x-2">
+          <div className="flex mt-4 space-x-2 overflow-x-auto">
             {product.images.map((image, index) => (
               <img
                 key={index}
@@ -71,11 +71,13 @@ const ProductDetail = ({ product }) => {
           <h2 className="text-3xl font-semibold mb-4">{product.name}</h2>
           <div className="flex mb-4">
             <span className="text-gray-600 mr-2">Ratings:</span>
-            {product.ratings +  "/5"}
+            {product.ratings + "/5"}
           </div>
           <p className="text-gray-600 mb-6">{product.description}</p>
           <div className="flex items-center mb-6">
-            <span className="text-2xl font-semibold text-gray-900 mr-4">${product.price.toFixed(2)}</span>
+            <span className="text-2xl font-semibold text-gray-900 mr-4">
+              ${product.price.toFixed(2)}
+            </span>
             {product.stockQuantity > 0 ? (
               <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
                 Add to Cart
@@ -85,7 +87,6 @@ const ProductDetail = ({ product }) => {
             )}
           </div>
           <p className="mb-4">Category: {product.category}</p>
-          
         </div>
       </div>
     </div>

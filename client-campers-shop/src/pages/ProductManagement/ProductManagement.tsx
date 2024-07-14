@@ -6,7 +6,7 @@ import { TProduct } from "../../interfaces";
 import { useDeleteSingleProductMutation } from "../../redux/baseApi";
 import Swal from "sweetalert2";
 
-const ProductManagement: React.FC<{ Products: TProduct }> = ({ products }) => {
+const ProductManagement: React.FC<{ products: TProduct }> = ({ products }) => {
   const [deleteProduct] = useDeleteSingleProductMutation(undefined);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [productIdToUpdate, setProductIdToUpdate] = useState<number | null>(
@@ -109,7 +109,7 @@ const ProductManagement: React.FC<{ Products: TProduct }> = ({ products }) => {
                   <td className="py-2 px-4 border-b">{product.ratings}</td>
                   <td className="py-2 px-4 border-b">
                     <div className="flex flex-wrap gap-2">
-                      {product.images.map((image, index) => (
+                      {product.images.map((image: string, index: number) => (
                         <div key={index} className="relative">
                           <img
                             src={image}

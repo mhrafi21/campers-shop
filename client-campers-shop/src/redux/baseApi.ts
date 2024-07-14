@@ -32,7 +32,7 @@ export const baseApi = createApi({
         url: `/products/${id}`,
         method: "GET",
       }),
-      providesTags: (result, error, id) => [{ type: "Products", id }],
+      providesTags: (id) => [{ type: "Products", id }],
     }),
     updateProductById: builder.mutation({
       query: ({ productId, ...product }) => ({
@@ -40,7 +40,7 @@ export const baseApi = createApi({
         method: "PUT",
         body: product,
       }),
-      invalidatesTags: (result, error, { _id }) => [
+      invalidatesTags: ({ _id }) => [
         { type: "Products", id: _id },
       ],
     }),
@@ -52,7 +52,7 @@ export const baseApi = createApi({
           method: "DELETE"
         }
       },
-      invalidatesTags: (result, error, { _id }) => [{ type: "Products", id: _id }],
+      invalidatesTags: ({ _id }) => [{ type: "Products", id: _id }],
     })
 
     ,
@@ -91,7 +91,7 @@ export const baseApi = createApi({
           body: cart,
         };
       },
-      invalidatesTags: (result, error, { _id }) => [{ type: "Carts", id: _id }],
+      invalidatesTags: ({ _id }) => [{ type: "Carts", id: _id }],
     }),
   }),
 });

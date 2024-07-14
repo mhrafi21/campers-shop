@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { TProduct } from "../../interfaces";
 import { useCreateProductMutation } from "../../redux/baseApi";
 import toast from "react-hot-toast";
@@ -9,14 +9,14 @@ interface Props {
 }
 
 const AddProductsModal: React.FC<Props> = ({ onClose }) => {
-  const [addCreateProduct, { data, error, isLoading }] =
+  const [addCreateProduct, {  error }] =
     useCreateProductMutation(undefined);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<TProduct>();
 
   // Define categories (adjust as per your application's categories)
   const categories = [
@@ -28,7 +28,7 @@ const AddProductsModal: React.FC<Props> = ({ onClose }) => {
     "Outdoor Clothing",
   ];
 
-  const onSubmit = async (data: TProduct) => {
+  const onSubmit: SubmitHandler<TProduct> = async (data) => {
     if (error) {
       console.error("Error creating product:", error);
       return;

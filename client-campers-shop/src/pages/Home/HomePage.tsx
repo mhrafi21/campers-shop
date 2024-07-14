@@ -6,7 +6,7 @@ import FeaturedProducts from './FeaturedProducts'
 import Faq from './Faq'
 import VideoBlogs from './VideoBlogs'
 
-const HomePage = () => {
+const HomePage: React.FC = () => {
   return (
     <div>
       <Hero />

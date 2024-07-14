@@ -27,7 +27,7 @@ const CheckoutForm: React.FC = () => {
       CartData?.data
         .reduce(
           (total: number, item: TProduct) =>
-            total + item?.product.price * item.quantity,
+            total + item.product.price * item.quantity,
           0
         )
         .toFixed(2)
