@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import UpdateProductModal from "./UpdateProductModal";
 import AddProductsModal from "./AddProductsModal";
-import DefaultContainer from "../../components/DefaultContainer";
 import { TProduct } from "../../interfaces";
 import { useDeleteSingleProductMutation } from "../../redux/baseApi";
 import Swal from "sweetalert2";
