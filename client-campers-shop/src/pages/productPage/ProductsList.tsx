@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const ProductsList: React.FC<{ product: TProduct }> = ({ product }) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+    <div className=" rounded overflow-hidden shadow-lg bg-white">
       {/* Product Image */}
       <img
         className="w-full h-64 object-cover object-center"
@@ -26,7 +26,7 @@ const ProductsList: React.FC<{ product: TProduct }> = ({ product }) => {
 
         {/* Product Details Button */}
         <Link to={`/product/${product._id}`}>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">
             Product Details
           </button>
         </Link>

@@ -17,7 +17,7 @@ const initialState: ProductsState = {
   error: null,
   searchQuery: "",
   selectedCategory: "",
-  priceRange: { min: 0, max: 10000000 },
+  priceRange: { min: 0, max: 12000000 },
   sortBy: "asc",
 };
 
@@ -40,7 +40,7 @@ const productsSlice = createSlice({
     clearFilters(state) {
       state.searchQuery = "";
       state.selectedCategory = "";
-      state.priceRange = { min: 0, max: 10000000 };
+      state.priceRange = { min: 0, max: 12000000 };
       state.sortBy = "asc";
     },
   },

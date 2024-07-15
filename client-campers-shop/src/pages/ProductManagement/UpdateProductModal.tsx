@@ -9,12 +9,61 @@ interface Props {
 }
 
 const categories = [
-  "Camping Tent",
-  "Sleeping Bag",
-  "Backpack",
-  "Portable Stove",
-  "Hiking Boots",
-  "Outdoor Clothing",
+
+  {
+    key: "Camping Tent",
+    value: "camping-tent",
+  },
+  {
+    key: "Sleeping Bag",
+    value: "sleeping-bag",
+  },
+  {
+    key: "Backpack",
+    value: "backpack",
+  },
+  {
+    key: "Portable Stove",
+    value: "portable-stove",
+  },
+  {
+    key: "Hiking Boots",
+    value: "hiking-boots",
+  },
+  {
+    key: "Outdoor Clothing",
+    value: "outdoor-clothing",
+  },
+  {
+    key: "Camping Cookware",
+    value: "camping-cookware",
+  },
+  {
+    key: "First Aid Kit",
+    value: "first-aid-kit",
+  },{
+    key: "Camping Hammock",
+    value: "camping-hammock",
+  },
+  {
+    key: "Camping Cooler",
+    value: "camping-cooler",
+  },
+  {
+    key: "Camping Knife",
+    value: "camping-knife",
+  },
+  {
+    key: "Camping Chair",
+    value: "camping-chair",
+  },{
+    key: "Lantern",
+    value: "lantern",
+  },
+  {
+    key: "Water Bottle",
+    value: "water-bottle",
+  }
 ];
 
 const UpdateProductModal: React.FC<Props> = ({ productId , onClose }) => {
@@ -60,8 +109,8 @@ const UpdateProductModal: React.FC<Props> = ({ productId , onClose }) => {
   return (
  <div>
     {isLoading && <div>Loading...</div>}
-       <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-xl w-full mx-4 md:mx-auto">
+       <div className="fixed inset-0 flex items-center justify-center z-[600] bg-gray-900 bg-opacity-50 ">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-xl w-full  mx-4 md:mx-auto">
         <p className="text-lg font-semibold bg-gray-200 py-2 px-4">
           Update Product
         </p>
@@ -178,8 +227,8 @@ const UpdateProductModal: React.FC<Props> = ({ productId , onClose }) => {
               >
                 <option value="">Select a category</option>
                 {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
+                  <option key={category.key} value={category.value}>
+                    {category.key}
                   </option>
                 ))}
               </select>

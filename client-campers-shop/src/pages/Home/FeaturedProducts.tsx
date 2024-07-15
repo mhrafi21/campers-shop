@@ -16,7 +16,6 @@ const FeaturedProducts = () => {
   console.log(data?.data);
 
   const settings = {
-    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
@@ -47,10 +46,10 @@ const FeaturedProducts = () => {
   };
 
   return (
-    <section className="py-12 bg-gray-200">
+    <section className="py-12">
     <DefaultContainer>
-    <div className="container mx-auto px-6 lg:px-8">
-        <h2 className="text-3xl font-bold mb-8 text-center">Best Selling / Recommended Products</h2>
+    <div className="">
+        <h2 className="text-3xl font-bold mb-8 text-center">Featured Products</h2>
         <Slider {...settings}>
           {data?.data?.map((product:TProduct) => (
             <div key={product._id} className="p-2">

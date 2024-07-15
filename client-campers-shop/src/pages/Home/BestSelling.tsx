@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -7,17 +6,14 @@ import { useGetProductsQuery } from '../../redux/baseApi';
 import DefaultContainer from '../../components/DefaultContainer';
 import { TProduct } from '../../interfaces';
 
-
-
 const BestSelling = () => {
-
-  const {data} = useGetProductsQuery(undefined);
+  const { data } = useGetProductsQuery(undefined);
 
   console.log(data?.data);
 
   const settings = {
-    dots: true,
-    infinite: true,
+    dots: false,
+    infinite: false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -47,34 +43,45 @@ const BestSelling = () => {
   };
 
   return (
-    <section className="py-12 bg-gray-200">
-    <DefaultContainer>
-    <div className="container mx-auto px-6 lg:px-8">
-        <h2 className="text-3xl font-bold mb-8 text-center">Best Selling / Recommended Products</h2>
-        <Slider {...settings}>
-          {data?.data?.slice(0,20).map((product:TProduct) => (
-            <div key={product._id} className="p-2">
+    <section className="py-12">
+      <DefaultContainer>
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold mb-8">Best Selling Products</h2>
+        </div>
+        <Slider {...settings} >
+          {data?.data?.slice(0, 20).map((product: TProduct) => (
+            <div key={product._id} className='px-2
+            '>
               <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-          
-
-                    <img src={product?.images[0]} alt={product.name} className="w-full h-64 object-cover" />
-                  
-                
+                <img
+                  src={product?.images[0]}
+                  alt={product.name}
+                  className="w-full h-64 object-cover"
+                />
                 <div className="p-4">
                   <h3 className="text-lg font-bold mb-2">{product.name}</h3>
                   <p className="text-gray-700 mb-2">{product.description}</p>
                   <p className="text-gray-800 font-bold mb-2">{product.price}</p>
-                  <Link to={`/product/${product._id}`} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300 inline-block">View Details</Link>
+                  <Link
+                    to={`/product/${product._id}`}
+                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300 inline-block"
+                  >
+                    View Details
+                  </Link>
                 </div>
               </div>
             </div>
           ))}
         </Slider>
         <div className="text-center mt-8">
-          <Link to="/product" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300 inline-block">View More</Link>
+          <Link
+            to="/product"
+            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300 inline-block"
+          >
+            View More
+          </Link>
         </div>
-      </div>
-    </DefaultContainer>
+      </DefaultContainer>
     </section>
   );
 };

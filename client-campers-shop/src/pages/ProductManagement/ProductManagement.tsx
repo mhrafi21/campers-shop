@@ -70,8 +70,8 @@ const ProductManagement: React.FC<{ products: TProduct[] }> = ({ products }) => 
   //   delete product;
 
   return (
-    <DefaultContainer>
-      <div className="container mx-auto my-8">
+
+      <div className=" my-8">
         <div className="flex justify-end mb-6">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded "
@@ -81,7 +81,7 @@ const ProductManagement: React.FC<{ products: TProduct[] }> = ({ products }) => 
           </button>
         </div>
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-300">
+          <table className=" bg-white border border-gray-300">
             <thead>
               <tr>
                 <th className="py-2 px-4 border-b text-left">Name</th>
@@ -162,7 +162,7 @@ const ProductManagement: React.FC<{ products: TProduct[] }> = ({ products }) => 
           <AddProductsModal onClose={closeCreateModal}></AddProductsModal>
         )}
       </div>
-    </DefaultContainer>
+
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DefaultContainer from '../../components/DefaultContainer';
 
 interface FAQItem {
   question: string;
@@ -28,22 +29,20 @@ const Faq: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
-    if (activeIndex === index) {
-      setActiveIndex(null); // Close the accordion if it's already open
-    } else {
-      setActiveIndex(index); // Open the accordion
-    }
+    setActiveIndex(activeIndex === index ? null : index); // Toggle accordion state
   };
 
   return (
-    <section className="py-12 bg-gray-100">
-      <div className="container mx-auto px-6 lg:px-8">
+    <section className="py-12">
+      <DefaultContainer>
+
+      <div>
         <h2 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
         <div className="max-w-3xl mx-auto">
           {faqItems.map((item, index) => (
             <div key={index} className="mb-6">
               <button
-                className="flex justify-between items-center w-full border-b border-gray-300 py-4 focus:outline-none"
+                className="flex justify-between items-center w-full border-b border-gray-300 py-4 focus:outline-none hover:bg-gray-200 transition duration-300"
                 onClick={() => toggleAccordion(index)}
               >
                 <h3 className="text-lg font-medium">{item.question}</h3>
@@ -69,6 +68,7 @@ const Faq: React.FC = () => {
           ))}
         </div>
       </div>
+      </DefaultContainer>
     </section>
   );
 };

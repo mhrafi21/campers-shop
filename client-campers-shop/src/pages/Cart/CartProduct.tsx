@@ -7,10 +7,6 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { TCartsProps } from "../../interfaces";
 
-
-
-
-
 const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
   const [deleteProduct] = useDeleteCartMutation(undefined);
   const [updateQuantity, { isLoading }] = useUpdateCartMutation(undefined);
@@ -19,8 +15,8 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
    
     try {
       if (
-        cartItem?.product.stockQuantity > 0 &&
-        cartItem.quantity < cartItem.product.stockQuantity
+        cartItem?.product?.stockQuantity > 0 &&
+        cartItem.quantity < cartItem?.product?.stockQuantity
       ) {
         const res = await updateQuantity({
           cartId: id,
@@ -40,7 +36,7 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
 
   const decreaseQuantity = async (id: string) => {
     try {
-      if (cartItem?.quantity > 1 && cartItem.quantity > 1
+      if (cartItem?.quantity > 1 && cartItem?.quantity > 1
         ) {
          await updateQuantity({
           cartId: id,
@@ -94,15 +90,15 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
         <div className="flex-grow">
           <h2 className="text-xl font-bold">{cartItem?.product?.name}</h2>
           <p className="text-gray-600">{cartItem?.product?.description}</p>
-          <p className="text-gray-800 font-semibold">
-            <p className="text-gray-800 font-semibold">
+          <p className="text-gray-800 font-semibold flex flex-col">
+            <span className="text-gray-800 font-semibold">
               Stock:{" "}
-              {cartItem?.product.stockQuantity > 0 ? (
-                cartItem?.product.stockQuantity
+              {cartItem?.product?.stockQuantity > 0 ? (
+                cartItem?.product?.stockQuantity
               ) : (
                 <span className="text-green-500">Out of stock</span>
               )}
-            </p>
+            </span>
             Category: {cartItem?.product?.category}
           </p>
           <p className="text-gray-800 font-semibold">
@@ -118,7 +114,7 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
             >
               -
             </button>
-            <span className="px-4">{cartItem.quantity}</span>
+            <span className="px-4">{cartItem?.quantity}</span>
             <button
               onClick={() => increaseQuantity(cartItem._id)}
               className={`bg-gray-300 px-2 ${isLoading && "opacity-40"} py-1 rounded-r`}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 import { CSSTransition } from 'react-transition-group';
+import DefaultContainer from '../DefaultContainer';
 
 
 
@@ -35,9 +36,10 @@ const NavBar: React.FC = () => {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-gray-800 text-white p-4 h-${navHeight}`}>
-      <div className="container mx-auto flex justify-between items-center">
+        <DefaultContainer>
+        <div className="flex justify-between items-center">
         <div className="text-2xl font-bold">
-          <Link to="/">Brand</Link>
+          <Link to="/">Campers shop</Link>
         </div>
         <div className="hidden md:flex space-x-4">
           <Link to="/" className="hover:text-gray-400">Home</Link>
@@ -69,6 +71,7 @@ const NavBar: React.FC = () => {
           </Link>
         </div>
       </CSSTransition>
+        </DefaultContainer>
     </nav>
   );
 };

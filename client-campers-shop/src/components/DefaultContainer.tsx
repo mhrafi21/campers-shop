@@ -5,7 +5,7 @@ type DefaultContainerProps = {
 };
 
 const DefaultContainer: React.FC<DefaultContainerProps> = ({ children }) => {
-  return <div className="max-w-[1280px] mx-auto px-2 sm:px-0 ">{children}</div>;
+  return <div className="max-w-[1280px] mx-auto px-6 lg:px-8 ">{children}</div>;
 };
 
 export default DefaultContainer;

@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect } from "react";
+import React, { FormEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setSearchQuery,
@@ -11,7 +11,7 @@ import { RootState, AppDispatch } from "../../redux/store";
 import { useGetProductsQuery } from "../../redux/baseApi";
 import DefaultContainer from "../../components/DefaultContainer";
 import { TProduct } from "../../interfaces";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import ProductsList from "./ProductsList";
 
 const ProductsPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -63,6 +63,21 @@ const ProductsPage: React.FC = () => {
       case "101-200":
         dispatch(setPriceRange({ min: 101, max: 200 }));
         break;
+      case "201-400":
+        dispatch(setPriceRange({ min: 201, max: 400 }));
+        break;
+      case "401-600":
+        dispatch(setPriceRange({ min: 401, max: 600 }));
+        break;
+      case "601-800":
+        dispatch(setPriceRange({ min: 601, max: 800 }));
+        break;
+      case "801-1200":
+        dispatch(setPriceRange({ min: 801, max: 1200 }));
+        break;
+      case "1201-12000000":
+        dispatch(setPriceRange({ min: 801, max: 12000000 }));
+        break;
       default:
         break;
     }
@@ -76,28 +91,36 @@ const ProductsPage: React.FC = () => {
     dispatch(clearFilters());
   };
 
-  useEffect(() => {
-    // Perform any initial actions here if needed
-  }, []);
-
   return (
     <div className="bg-gray-100 min-h-screen">
       <DefaultContainer>{isLoading && <div>Loading...</div>}</DefaultContainer>
       <DefaultContainer>
-        <div className="container mx-auto py-8">
-          {/* Filter controls */}
-          <div className="flex flex-col md:flex-row md:justify-between items-center mb-8">
-            {/* Search */}
-            <form onSubmit={handleSearchChange}>
+        <div className="py-8">
+          {/* searching */}
+          <div className="">
+            <form
+              onSubmit={handleSearchChange}
+              className="flex items-center mb-2 md:mb-0"
+            >
               <input
                 type="text"
                 placeholder="Search products..."
                 name="search"
-                className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0"
+                className="p-2 w-full md:w-1/2 border border-gray-300 rounded-md mr-4"
               />
-              <button type="submit">Search</button>
+              <button
+                type="submit"
+                className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200"
+              >
+                Search
+              </button>
             </form>
+          </div>
 
+          {/* Filter controls */}
+
+          <div className="flex flex-col md:flex-row md:justify-between items-center my-8">
+            {/* Search */}
             {/* Category */}
             <select
               value={selectedCategory}
@@ -107,7 +130,17 @@ const ProductsPage: React.FC = () => {
               <option value="">All Categories</option>
               <option value="Camping Tent">Camping Tent</option>
               <option value="Backpack">Backpack</option>
-              {/* Add more options as needed */}
+              <option value="Sleeping Bag">Sleeping Bag</option>
+              <option value="Camping Stove">Camping Stove</option>
+              <option value="Camping Chair">Camping Chair</option>
+              <option value="Lantern">Lantern</option>
+              <option value="Hiking Boots">Hiking Boots</option>
+              <option value="Camping Cookware">Camping Cookware</option>
+              <option value="Water Bottle">Water Bottle</option>
+              <option value="First Aid Kit">First Aid Kit</option>
+              <option value="Camping Hammock">Camping Hammock</option>
+              <option value="Camping Cooler">Camping Cooler</option>
+              <option value="Camping Knife">Camping Knife</option>
             </select>
 
             {/* Price Range */}
@@ -116,10 +149,15 @@ const ProductsPage: React.FC = () => {
               onChange={handlePriceRangeChange}
               className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0"
             >
+              <option value="0-12000000">Select Price Range</option>
               <option value="0-50">Up to $50</option>
               <option value="51-100">$51 - $100</option>
               <option value="101-200">$101 - $200</option>
-              {/* Add more ranges as needed */}
+              <option value="201-400">$201 - $400</option>
+              <option value="401-600">$401 - $600</option>
+              <option value="601-800">$601 - $800</option>
+              <option value="801-1200">$801 - $1200</option>
+              <option value="1201-12000000">$1201 - above</option>
             </select>
 
             {/* Sort By */}
@@ -135,7 +173,7 @@ const ProductsPage: React.FC = () => {
             {/* Clear Filters */}
             <button
               onClick={handleClearFilters}
-              className="p-2 bg-gray-800 text-white rounded-md"
+              className="p-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition duration-200"
             >
               Clear Filters
             </button>
@@ -144,27 +182,7 @@ const ProductsPage: React.FC = () => {
           {/* Product grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {products?.data?.map((product: TProduct) => (
-              <div
-                key={product._id}
-                className="bg-white rounded-lg overflow-hidden shadow-lg"
-              >
-                <img
-                  src={product.images[0]}
-                  alt={product.name}
-                  className="w-full h-48 object-cover object-center"
-                />
-                <div className="p-4">
-                  <h2 className="text-lg font-semibold">{product.name}</h2>
-                  <p className="text-gray-600 mb-2">{product.description}</p>
-                  <p className="text-lg font-bold">${product.price}</p>
-                  <Link
-                    to={`/product/${product._id}`}
-                    className="text-blue-500 hover:underline"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </div>
+              <ProductsList key={product._id} product={product}></ProductsList>
             ))}
           </div>
         </div>

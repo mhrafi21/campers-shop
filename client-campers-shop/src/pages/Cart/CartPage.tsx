@@ -13,7 +13,7 @@ const CartPage: React.FC = () => {
       data?.data
         .reduce(
           (total: number, item: TCartsProps) =>
-            total + item.product.price * item.quantity,
+            total + item?.product?.price * item.quantity,
           0
         )
         .toFixed(2)
