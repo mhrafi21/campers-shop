@@ -1,5 +1,5 @@
 export type TProduct = {
-  _id: string;
+  _id?: string;
   name: string;
   price: number;
   stockQuantity: number;
@@ -11,7 +11,7 @@ export type TProduct = {
 };
 
 export type TCartsProps = {
-  _id: string;
+  _id?: string;
   product: TProduct;
   name: string;
   price: number;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useGetProductsQuery } from "../../redux/baseApi";
-import ProductsList from "../productPage/ProductsList";
+import ProductsList from "../../components/ProductsList";
 import { TProduct } from "../../interfaces";
 import DefaultContainer from "../../components/DefaultContainer";
 

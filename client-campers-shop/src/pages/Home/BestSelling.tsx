@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { useGetProductsQuery } from '../../redux/baseApi';
 import DefaultContainer from '../../components/DefaultContainer';
 import { TProduct } from '../../interfaces';
+import Title from '../../components/Title';
 
 const BestSelling = () => {
   const { data } = useGetProductsQuery(undefined);
@@ -46,7 +47,7 @@ const BestSelling = () => {
     <section className="py-12">
       <DefaultContainer>
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-8">Best Selling Products</h2>
+            <Title>Best Selling Products</Title>
         </div>
         <Slider {...settings} >
           {data?.data?.slice(0, 20).map((product: TProduct) => (

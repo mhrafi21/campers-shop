@@ -9,8 +9,11 @@ import toast from "react-hot-toast";
 const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
 
 
-  const [addToCart, {isLoading}] = useCreateCartProductMutation(undefined);
+  const [addToCart, {data,isLoading}] = useCreateCartProductMutation(undefined);
 
+  const cartQuantity = data?.data?.quantity;
+
+  console.log(cartQuantity, product.stockQuantity)
 
 
   const sliderRef = useRef<Slider>(null);
@@ -55,10 +58,15 @@ const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
   const handleAddToCart = async(id : string) => {
     // TODO: Implement adding product to cart logic
 
-    const res = await addToCart({product: id, quantity: 1 }).unwrap();
-    if(res?.success){
-      toast.success("Add to cart successfully added!")
-    }
+
+      const res = await addToCart({product: id, quantity: 1 }).unwrap();
+      if(res?.success){
+        toast.success("Add to cart successfully added!")
+      }
+    
+
+
+    
     
   };
 
@@ -92,6 +100,10 @@ const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
         <div className="flex flex-col">
           <h2 className="text-3xl font-semibold mb-4">{product.name}</h2>
           <div className="flex mb-4">
+            <span className="text-gray-600 mr-2">Stock:</span>
+            {product.stockQuantity > 0 ? <span className="text-green-600">In Stock({product.stockQuantity})</span>: <span className="text-red-700">Out Of Stock</span>}
+          </div>
+          <div className="flex mb-4">
             <span className="text-gray-600 mr-2">Ratings:</span>
             {product.ratings + "/5"}
           </div>
@@ -103,13 +115,14 @@ const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
             </span>
           </div>
           <div className="">
-            {product.stockQuantity > 0 ? (
-              <button onClick={() => handleAddToCart(product._id as string)} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+            {
+              product.stockQuantity < cartQuantity ? <button  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+              Add To cart
+            </button> : 
+            <button onClick={() => handleAddToCart(product._id as string)} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
                 {isLoading ? <div>Loading...</div> : "Add to Cart"}
               </button>
-            ) : (
-              <span className="text-red-500 font-semibold">Out of Stock</span>
-            )}
+            }
           </div>
         </div>
       </div>

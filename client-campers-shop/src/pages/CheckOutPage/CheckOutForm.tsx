@@ -1,7 +1,6 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useGetAllCartsQuery } from "../../redux/baseApi";
-import DefaultContainer from "../../components/DefaultContainer";
 import { TCartsProps} from "../../interfaces";
 import { useNavigate } from "react-router-dom";
 
@@ -11,9 +10,11 @@ type UserDetails = {
   phone: string;
   address: string;
   paymentMethod: string;
+  data: string[]
 };
 
 const CheckoutForm: React.FC = () => {
+  const {data} = useGetAllCartsQuery(undefined);
   const navigate = useNavigate();
   const { data: CartData, isLoading } = useGetAllCartsQuery(undefined);
   const {
@@ -45,6 +46,7 @@ const CheckoutForm: React.FC = () => {
       totalAmount: calculateTotalAmount(),
       paymentMethod: data?.paymentMethod,
       address: data?.address,
+      data: data?.data
     };
 
     console.log(orderInfo);
@@ -54,7 +56,6 @@ const CheckoutForm: React.FC = () => {
 
   return (
     <div>
-      <DefaultContainer>
         {isLoading && <div>Loading...</div>}
         <div>
           <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -143,7 +144,6 @@ const CheckoutForm: React.FC = () => {
             </form>
           </div>
         </div>
-      </DefaultContainer>
     </div>
   );
 };

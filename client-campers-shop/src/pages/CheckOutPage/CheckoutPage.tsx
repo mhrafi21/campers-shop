@@ -1,15 +1,17 @@
-import React from 'react'
-import CheckoutForm from './CheckOutForm'
+import React from "react";
+import CheckoutForm from "./CheckOutForm";
+import DefaultContainer from "../../components/DefaultContainer";
+import Title from "../../components/Title";
 
 const CheckoutPage: React.FC = () => {
   return (
-    <div>
-      CheckoutPage
-      {/* Add checkout form here */}  
-      <CheckoutForm />
-
+    <div className="my-8">
+      <DefaultContainer>
+          <Title>Checkout</Title>
+        <CheckoutForm />
+      </DefaultContainer>
     </div>
-  )
-}
+  );
+};
 
-export default CheckoutPage
+export default CheckoutPage;

@@ -100,10 +100,20 @@ const updateSingleProductFromDB = async (
   if (category !== undefined) product.category = category
   if (ratings !== undefined) product.ratings = ratings
 
+
   // Merge existing images with new images
-  if (images) {
+  
+if(images){
+  const isExists = product?.images.find(image => images?.includes(image))
+
+  if(isExists){
+    console.log("Already Exists")
+  }else{
     product.images = [...product.images, ...images]
   }
+
+}
+
 
   if (deleteImages && Array.isArray(deleteImages)) {
     product.images = product.images.filter(

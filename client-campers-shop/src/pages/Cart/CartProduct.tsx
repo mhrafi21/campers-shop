@@ -9,7 +9,8 @@ import { TCartsProps } from "../../interfaces";
 
 const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
   const [deleteProduct] = useDeleteCartMutation(undefined);
-  const [updateQuantity, { isLoading }] = useUpdateCartMutation(undefined);
+  const [updateQuantity, { isLoading, refetch }] =
+    useUpdateCartMutation(undefined);
 
   const increaseQuantity = async (id: string) => {
     try {
@@ -23,6 +24,7 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
           quantity: 1,
         }).unwrap();
         if (res?.success === false) {
+          refetch();
           toast.error("Not enough stock");
         }
       } else {
@@ -33,10 +35,10 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
     }
   };
 
-  const decreaseQuantity = async (id: string, cQuantity : number) => {
+  const decreaseQuantity = async (id: string, cQuantity: number) => {
     try {
-      if ( Number(cQuantity) >= 1) {
-        await updateQuantity({
+      if (Number(cQuantity) >= 1) {
+          await updateQuantity({
           cartId: id,
           action: "decrease",
           quantity: 1,
@@ -105,7 +107,12 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
           </p>
           <div className="flex items-center mt-4">
             <button
-              onClick={() => decreaseQuantity(cartItem._id, cartItem?.quantity as number)}
+              onClick={() =>
+                decreaseQuantity(
+                  cartItem._id as string,
+                  cartItem?.quantity as number
+                )
+              }
               className={`bg-gray-300 px-2 ${
                 isLoading && "opacity-40"
               } py-1 rounded-l`}
@@ -114,7 +121,7 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
             </button>
             <span className="px-4">{cartItem?.quantity}</span>
             <button
-              onClick={() => increaseQuantity(cartItem._id)}
+              onClick={() => increaseQuantity(cartItem._id as string)}
               className={`bg-gray-300 px-2 ${
                 isLoading && "opacity-40"
               } py-1 rounded-r`}
@@ -123,7 +130,7 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
             </button>
           </div>
           <button
-            onClick={() => handleDelete(cartItem._id)}
+            onClick={() => handleDelete(cartItem._id as string)}
             className="bg-red-500 text-white px-4 py-2 mt-4 rounded hover:bg-red-600"
           >
             Remove

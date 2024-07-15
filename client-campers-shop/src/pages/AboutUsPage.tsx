@@ -4,13 +4,14 @@ import teamImg1 from "../assets/images/hero.jpg";
 import teamImg2 from "../assets/images/hero.jpg";
 import teamImg3 from "../assets/images/hero.jpg";
 import DefaultContainer from "../components/DefaultContainer";
+import Title from "../components/Title";
 
 const AboutUsPage: React.FC = () => {
   return (
-    <section className="py-12">
+    <section className="">
       <DefaultContainer>
         <div className="">
-          <h2 className="text-3xl font-bold mb-8 text-center">About Us</h2>
+       <Title>About Us</Title>
 
           <div className="mb-8">
             <h3 className="text-2xl font-semibold mb-4">Contact Information</h3>

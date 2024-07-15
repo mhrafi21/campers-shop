@@ -104,7 +104,7 @@ const AddProductsModal: React.FC<Props> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-[600] bg-gray-900 bg-opacity-50">
+    <div className="fixed inset-0 overflow-y-scroll flex items-center justify-center z-[600] bg-gray-900 bg-opacity-50">
       <div className="bg-white rounded-lg overflow-hidden shadow-xl max-w-xl w-full">
         <div className="p-4">
           <p className="text-lg font-semibold">Create New Product</p>

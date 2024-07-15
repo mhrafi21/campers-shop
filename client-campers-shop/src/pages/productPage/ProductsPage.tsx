@@ -11,7 +11,7 @@ import { RootState, AppDispatch } from "../../redux/store";
 import { useGetProductsQuery } from "../../redux/baseApi";
 import DefaultContainer from "../../components/DefaultContainer";
 import { TProduct } from "../../interfaces";
-import ProductsList from "./ProductsList";
+import ProductsList from "../../components/ProductsList";
 
 const ProductsPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();

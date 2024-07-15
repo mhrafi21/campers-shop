@@ -19,7 +19,7 @@ export type UpdateCartMutationResult = {
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://backend-campers-shop.vercel.app/api/v1" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1" }),
   tagTypes: ["Products", "Carts"],
   endpoints: (builder) => ({
     createProduct: builder.mutation({
@@ -52,10 +52,13 @@ export const baseApi = createApi({
       providesTags: (id) => [{ type: "Products", id }],
     }),
     updateProductById: builder.mutation({
+   
       query: ({ productId, ...product }) => ({
+          
         url: `/products/${productId}`,
         method: "PUT",
         body: product,
+       
       }),
       invalidatesTags: ({ _id }) => [
         { type: "Products", id: _id },
@@ -71,9 +74,7 @@ export const baseApi = createApi({
       },
       invalidatesTags: ({ _id }) => [{ type: "Products", id: _id }],
     })
-
     ,
-
     createCartProduct: builder.mutation({
       query: (product) => {
         return {
@@ -109,6 +110,21 @@ export const baseApi = createApi({
       },
       invalidatesTags: ({ _id }) => [{ type: "Carts", id: _id }],
     }),
+    updateCartItem: builder.mutation<void, { productId: string, quantity: number }>({
+      query: ({ productId, quantity }) => ({
+        url: `/carts/${productId}`,
+        method: "PATCH",
+        body: { quantity },
+      }),
+      invalidatesTags: [{ type: "Carts"}],
+    }),
+    removeCartItem: builder.mutation<void, string>({
+      query: (productId) => ({
+        url: `/cart/${productId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Carts",}],
+    }),
   }),
 });
 
@@ -122,4 +138,6 @@ export const {
   useGetAllCartsQuery,
   useDeleteCartMutation,
   useUpdateCartMutation,
+  useUpdateCartItemMutation,
+  useRemoveCartItemMutation,
 } = baseApi;

@@ -46,7 +46,6 @@ const NavBar: React.FC = () => {
           <Link to="/about-us" className="hover:text-gray-400">About Us</Link>
           <Link to="/product" className="hover:text-gray-400">Products Page</Link>
           <Link to="/product-management" className="hover:text-gray-400">Product Management</Link>
-          <Link to="/wishlist" className="hover:text-gray-400">Wishlist</Link>
           <Link to="/cart" className="hover:text-gray-400 flex items-center">
             <FaShoppingCart className="mr-1" />
             Cart
@@ -64,7 +63,7 @@ const NavBar: React.FC = () => {
           <Link to="/about-us" className="block hover:text-gray-400">About Us</Link>
           <Link to="/product" className="block hover:text-gray-400">Products Page</Link>
           <Link to="/product-management" className="block hover:text-gray-400">Product Management</Link>
-          <Link to="/wishlist" className="block hover:text-gray-400">Wishlist</Link>
+      
           <Link to="/cart" className="hover:text-gray-400 flex items-center">
             <FaShoppingCart className="mr-1" />
             Cart

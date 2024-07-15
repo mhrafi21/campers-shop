@@ -2,6 +2,7 @@ import React from 'react';
 import ProductManagement from './ProductManagement';
 import DefaultContainer from '../../components/DefaultContainer';
 import {useGetProductsQuery } from '../../redux/baseApi';
+import Title from '../../components/Title';
 
 
 const App: React.FC = () => {
@@ -12,7 +13,7 @@ const App: React.FC = () => {
   return (
     <div className="">
       <DefaultContainer>
-      <h1 className="text-2xl font-bold text-center my-8">Product List</h1>
+     <Title>Product Management</Title>
       <ProductManagement products={data?.data} />
       </DefaultContainer>
     </div>

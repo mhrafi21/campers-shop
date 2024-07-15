@@ -1,5 +1,6 @@
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
+import { UpdateCartPayload } from "./cart.interface";
 import { cartServices } from "./cart.services";
 
 const createCart = catchAsync(async(req,res) => {
@@ -24,7 +25,7 @@ const getCart = catchAsync(async(req,res) => {
 })
 
 const updateCartItemQuantity = catchAsync(async(req,res) => {
-    const result = await cartServices.updateCartItemQuantityIntoDB(req.body);
+    const result = await cartServices.updateCartItemQuantityIntoDB(req.params.id as string,req.body as UpdateCartPayload);
     sendResponse(res, {
         statusCode: 200,
         success: true,

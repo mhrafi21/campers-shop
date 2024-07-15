@@ -15,7 +15,7 @@ const ProductDetailsPage = () => {
       <div>
         {data?.data &&
           data?.data?.map((product: TProduct) => (
-            <ProductDetail key={product._id} product={product} />
+            <ProductDetail key={product._id} product={product}/>
           ))}
       </div>
     </DefaultContainer>

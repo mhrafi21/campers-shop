@@ -1,31 +1,30 @@
 import httpStatus from 'http-status'
 import AppError from '../../errors/AppError'
 import Product from '../product/product.model'
-import { TCart } from './cart.interface'
+import { TCart, UpdateCartPayload } from './cart.interface'
 import Cart from './cart.model'
 
 const createCartIntoDB = async (payload: TCart) => {
   
   try {
     const product = await Product.findById(payload.product)
-
     if (!product) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Product not found')
     }
 
-    const cartItem = await Cart.findOne({ product: payload.product })
-
+    const cartItem = await Cart.findOne({ product: payload.product }).populate("product")
+    console.log(cartItem)
     if (!cartItem) {
       const result = await Cart.create(payload);
       return result
-    } else {
-      if ( product.stockQuantity === 0 || product.stockQuantity < payload.quantity) {
-        throw new AppError(httpStatus.BAD_REQUEST, 'Not enough stock')
-      }
+    }
+
+    if (Number( product?.stockQuantity) > Number(payload.quantity)) {
       cartItem.quantity += payload.quantity
-      await product.save()
       await cartItem.save()
       return cartItem
+    }else{
+      throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, "Not enough Stock")
     }
   } catch (error) {
     throw new AppError(httpStatus.BAD_REQUEST, `${error}`)
@@ -44,44 +43,22 @@ const getCartFromDB = async () => {
   }
 }
 
-type UpdateCartPayload = {
-  cartId: string
-  action: 'increase' | 'decrease'
-  quantity: number
-}
 
-const updateCartItemQuantityIntoDB = async (payload: UpdateCartPayload) => {
+
+const updateCartItemQuantityIntoDB = async (productId : string,payload: UpdateCartPayload) => {
+
+  const { quantity } = payload
   try {
-    let cartProduct = await Cart.findById(payload.cartId).populate('product')
-    let product = await Product.findById(cartProduct?.product)
-
-    if (!cartProduct || !product) {
-      throw new AppError(httpStatus.NOT_FOUND, 'Cart item or product not found')
-    }
-
-    if (payload.action === 'increase' && payload.quantity === 1) {
-      if (product.stockQuantity > 0 && product.stockQuantity > cartProduct.quantity) {
-        cartProduct.quantity += payload.quantity
-        await cartProduct.save();
-      } else {
-        throw new AppError(httpStatus.BAD_REQUEST, 'Not enough stock')
-      }
-    } else if (payload.action === 'decrease' && cartProduct?.quantity > payload?.quantity) {
-      if (product.stockQuantity === 0 && product.stockQuantity < cartProduct.quantity) {
-        throw new AppError(httpStatus.BAD_REQUEST, 'Not enough stock')
-      }
-     if(cartProduct.quantity >= 1 && payload.quantity === 1){
-  
-      cartProduct.quantity -= payload.quantity
-      await cartProduct.save();
-     }
+    const cartItem = await Cart.findById(productId); // Adjust for your data structure
+    if (cartItem) {
+      cartItem.quantity = quantity;
+      await cartItem.save();
+      
     } else {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Invalid action')
+      console.log("Error")
     }
-    await cartProduct.save()
-    await product.save()
   } catch (error) {
-    throw new AppError(httpStatus.BAD_REQUEST, `${error}`)
+    console.log("Eror", error)
   }
 }
 
