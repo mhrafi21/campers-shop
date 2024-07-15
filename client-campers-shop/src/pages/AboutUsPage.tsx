@@ -9,7 +9,7 @@ const AboutUsPage: React.FC = () => {
   return (
     <section className="py-12">
       <DefaultContainer>
-        <div className="px-6 lg:px-8">
+        <div className="">
           <h2 className="text-3xl font-bold mb-8 text-center">About Us</h2>
 
           <div className="mb-8">

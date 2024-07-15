@@ -16,16 +16,13 @@ const createCartIntoDB = async (payload: TCart) => {
     const cartItem = await Cart.findOne({ product: payload.product })
 
     if (!cartItem) {
-      const result = await Cart.create(payload)
-      product.stockQuantity -= payload.quantity
-      await product.save()
+      const result = await Cart.create(payload);
       return result
     } else {
-      if (product.stockQuantity === 0) {
+      if ( product.stockQuantity === 0 || product.stockQuantity < payload.quantity) {
         throw new AppError(httpStatus.BAD_REQUEST, 'Not enough stock')
       }
       cartItem.quantity += payload.quantity
-      product.stockQuantity -= payload.quantity
       await product.save()
       await cartItem.save()
       return cartItem
@@ -62,17 +59,22 @@ const updateCartItemQuantityIntoDB = async (payload: UpdateCartPayload) => {
       throw new AppError(httpStatus.NOT_FOUND, 'Cart item or product not found')
     }
 
-    if (payload.action === 'increase') {
+    if (payload.action === 'increase' && payload.quantity === 1) {
       if (product.stockQuantity > 0 && product.stockQuantity > cartProduct.quantity) {
         cartProduct.quantity += payload.quantity
+        await cartProduct.save();
       } else {
         throw new AppError(httpStatus.BAD_REQUEST, 'Not enough stock')
       }
-    } else if (payload.action === 'decrease') {
-      if (product.stockQuantity < 0 && product.stockQuantity < cartProduct.quantity) {
+    } else if (payload.action === 'decrease' && cartProduct?.quantity > payload?.quantity) {
+      if (product.stockQuantity === 0 && product.stockQuantity < cartProduct.quantity) {
         throw new AppError(httpStatus.BAD_REQUEST, 'Not enough stock')
       }
+     if(cartProduct.quantity >= 1 && payload.quantity === 1){
+  
       cartProduct.quantity -= payload.quantity
+      await cartProduct.save();
+     }
     } else {
       throw new AppError(httpStatus.BAD_REQUEST, 'Invalid action')
     }

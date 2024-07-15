@@ -3,8 +3,16 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { TProduct } from "../../interfaces";
+import { useCreateCartProductMutation } from "../../redux/baseApi";
+import toast from "react-hot-toast";
 
 const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
+
+
+  const [addToCart, {isLoading}] = useCreateCartProductMutation(undefined);
+
+
+
   const sliderRef = useRef<Slider>(null);
 
   const settings = {
@@ -40,6 +48,19 @@ const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
       sliderRef.current.slickGoTo(index);
     }
   }, []);
+
+
+  // add to cart 
+
+  const handleAddToCart = async(id : string) => {
+    // TODO: Implement adding product to cart logic
+
+    const res = await addToCart({product: id, quantity: 1 }).unwrap();
+    if(res?.success){
+      toast.success("Add to cart successfully added!")
+    }
+    
+  };
 
   return (
     <div className="py-8">
@@ -83,8 +104,8 @@ const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
           </div>
           <div className="">
             {product.stockQuantity > 0 ? (
-              <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
-                Add to Cart
+              <button onClick={() => handleAddToCart(product._id as string)} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+                {isLoading ? <div>Loading...</div> : "Add to Cart"}
               </button>
             ) : (
               <span className="text-red-500 font-semibold">Out of Stock</span>

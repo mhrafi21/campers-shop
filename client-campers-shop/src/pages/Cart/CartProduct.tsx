@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import {
   useDeleteCartMutation,
   useUpdateCartMutation,
@@ -12,20 +12,19 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
   const [updateQuantity, { isLoading }] = useUpdateCartMutation(undefined);
 
   const increaseQuantity = async (id: string) => {
-   
     try {
       if (
-        cartItem?.product?.stockQuantity > 0 &&
-        cartItem.quantity < cartItem?.product?.stockQuantity
+        Number(cartItem?.product?.stockQuantity) > 0 &&
+        Number(cartItem.quantity) < Number(cartItem?.product?.stockQuantity)
       ) {
         const res = await updateQuantity({
           cartId: id,
           action: "increase",
           quantity: 1,
         }).unwrap();
-       if(res?.success === false){
-        toast.error("Not enough stock");
-       }
+        if (res?.success === false) {
+          toast.error("Not enough stock");
+        }
       } else {
         toast.error("No more stock");
       }
@@ -34,11 +33,10 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
     }
   };
 
-  const decreaseQuantity = async (id: string) => {
+  const decreaseQuantity = async (id: string, cQuantity : number) => {
     try {
-      if (cartItem?.quantity > 1 && cartItem?.quantity > 1
-        ) {
-         await updateQuantity({
+      if ( Number(cQuantity) >= 1) {
+        await updateQuantity({
           cartId: id,
           action: "decrease",
           quantity: 1,
@@ -77,8 +75,6 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
     }
   };
 
- 
-
   return (
     <div className="flex flex-col">
       <div className="border rounded-lg p-4 mb-4 flex flex-col md:flex-row">
@@ -109,15 +105,19 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
           </p>
           <div className="flex items-center mt-4">
             <button
-              onClick={() => decreaseQuantity(cartItem._id)}
-              className={`bg-gray-300 px-2 ${isLoading && "opacity-40"} py-1 rounded-l`}
+              onClick={() => decreaseQuantity(cartItem._id, cartItem?.quantity as number)}
+              className={`bg-gray-300 px-2 ${
+                isLoading && "opacity-40"
+              } py-1 rounded-l`}
             >
               -
             </button>
             <span className="px-4">{cartItem?.quantity}</span>
             <button
               onClick={() => increaseQuantity(cartItem._id)}
-              className={`bg-gray-300 px-2 ${isLoading && "opacity-40"} py-1 rounded-r`}
+              className={`bg-gray-300 px-2 ${
+                isLoading && "opacity-40"
+              } py-1 rounded-r`}
             >
               +
             </button>

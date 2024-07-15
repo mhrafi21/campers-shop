@@ -101,7 +101,6 @@ export const baseApi = createApi({
     }),
     updateCart: builder.mutation({
       query: (cart) => {
-        console.log(cart);
         return {
           url: `/carts`,
           method: "PUT",
