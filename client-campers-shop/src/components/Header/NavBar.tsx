@@ -35,7 +35,7 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-gray-800 text-white p-4 h-${navHeight}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-gray-800 text-white py-4 px-0.5 md:p-4 h-${navHeight}`}>
         <DefaultContainer>
         <div className="flex justify-between items-center">
         <div className="text-2xl font-bold">

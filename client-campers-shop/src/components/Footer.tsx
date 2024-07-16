@@ -1,11 +1,13 @@
 import React from "react";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import DefaultContainer from "./DefaultContainer";
 
 const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-800 text-white py-12">
-      <div className="container mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between">
+          <DefaultContainer>
+          <div className="flex flex-col md:flex-row justify-between">
         <div className="mb-8 md:mb-0 md:w-1/4">
           <h3 className="text-lg font-bold mb-4">Quick Links</h3>
           <ul className="space-y-2">
@@ -87,6 +89,7 @@ const Footer: React.FC = () => {
       <div className="mt-8 text-center text-gray-400">
         &copy; {new Date().getFullYear()} Campers Shop. All rights reserved.
       </div>
+          </DefaultContainer>
     </footer>
   );
 };

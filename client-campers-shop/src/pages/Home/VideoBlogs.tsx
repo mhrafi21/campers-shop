@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import img from "../../assets/images/hero.jpg";
+import DefaultContainer from '../../components/DefaultContainer';
 
 interface TourGroup {
   id: number;
@@ -42,7 +43,8 @@ const TourGroupsSection: React.FC = () => {
 
   return (
     <section className="py-12 bg-gray-200">
-      <div className="container mx-auto px-6 lg:px-8">
+        <DefaultContainer>
+        <div className="">
         <h2 className="text-3xl font-bold mb-8 text-center">Explore Our Tour Groups</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {tourGroups.map((group) => (
@@ -70,6 +72,7 @@ const TourGroupsSection: React.FC = () => {
           ))}
         </div>
       </div>
+        </DefaultContainer>
     </section>
   );
 };
