@@ -62,7 +62,7 @@ const FeaturedProducts = () => {
                 <div className="p-4">
                   <h3 className="text-lg font-bold mb-2">{product.name}</h3>
                   <p className="text-gray-700 mb-2">{product.description}</p>
-                  <p className="text-gray-800 font-bold mb-2">{product.price}</p>
+                  <p className="text-gray-800 font-bold mb-2">${product.price}</p>
                   <Link to={`/product/${product._id}`} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300 inline-block">View Details</Link>
                 </div>
               </div>
