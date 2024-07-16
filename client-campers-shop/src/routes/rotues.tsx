@@ -5,7 +5,6 @@ import HomePage from "../pages/Home/HomePage";
 import AboutUsPage from "../pages/AboutUsPage";
 import ProductsPage from "../pages/productPage/ProductsPage";
 import ProductManagementPage from "../pages/ProductManagement/ProductManagementPage";
-import CartPage from "../pages/Cart/CartPage";
 import ProductDetailsPage from "../pages/productPage/ProductDetailsPage";
 import CheckoutPage from "../pages/CheckOutPage/CheckoutPage";
 import SuccessPage from "../pages/SuccessPage";

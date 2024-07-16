@@ -9,7 +9,7 @@ import { TCartsProps } from "../../interfaces";
 
 const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
   const [deleteProduct] = useDeleteCartMutation(undefined);
-  const [updateQuantity, { isLoading, refetch }] =
+  const [updateQuantity, { isLoading }] =
     useUpdateCartMutation(undefined);
 
   const increaseQuantity = async (id: string) => {
@@ -24,7 +24,7 @@ const CartProduct: React.FC<{ cartItem: TCartsProps }> = ({ cartItem }) => {
           quantity: 1,
         }).unwrap();
         if (res?.success === false) {
-          refetch();
+
           toast.error("Not enough stock");
         }
       } else {

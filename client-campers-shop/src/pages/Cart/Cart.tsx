@@ -5,14 +5,14 @@ import {
   useGetAllCartsQuery,
   useUpdateCartItemMutation,
 } from "../../redux/baseApi";
-import { TCartItem, TCartsProps } from "../../interfaces";
-import { Link, useNavigate } from "react-router-dom";
+import { TCartsProps, TProduct } from "../../interfaces";
+import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import DefaultContainer from "../../components/DefaultContainer";
 import Title from "../../components/Title";
 
-const Cart: React.FC<TCartItem> = () => {
-  const navigate = useNavigate();
+const Cart: React.FC = () => {
+
   const { data: cartItems, isLoading, error } = useGetAllCartsQuery(undefined);
 
   const [updateCartItem] = useUpdateCartItemMutation(undefined);
@@ -21,7 +21,7 @@ const Cart: React.FC<TCartItem> = () => {
   const handleIncreaseQuantity = async (
     productId: string,
     quantity: number,
-    stock
+    stock: TProduct
   ) => {
     if (quantity > stock?.stockQuantity) {
       toast.error("Not enough stock");
@@ -119,7 +119,7 @@ const Cart: React.FC<TCartItem> = () => {
                                 handleIncreaseQuantity(
                                   item._id as string,
                                   item.quantity,
-                                  item.product
+                                  item.product as TProduct
                                 )
                               }
                               className="bg-gray-200 px-2 py-1 rounded-r"

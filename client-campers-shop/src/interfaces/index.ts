@@ -32,6 +32,3 @@ export type TProductCart = {
 // Define the TCartsProps type
 
 // Define the TCartItem type
-export type TCartItem = {
-  cartItem: TCartsProps; // Change the type of cartItem to TCartsProps
-};
