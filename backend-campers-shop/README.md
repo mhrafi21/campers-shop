@@ -4,6 +4,8 @@
 
 Campers Shop is an e-commerce website dedicated to providing all the necessary and fun items for camping enthusiast.
 
+- Live Links: https://backend-campers-shop.vercel.app/
+
 ## Project Description
 
 Campers Shop is designed to cater to the needs of camping enthusiasts by offering a comprehensive selection of camping products. The project involves the development of various core pages and functionalities, ensuring a seamless and engaging user experience. From product browsing to detailed product views and efficient cart management, the website provides all necessary features to support an online shopping journey.
@@ -89,12 +91,12 @@ Make sure you have the following installed on your machine:
    ```bash
     PORT=5000
     DB_URL=your_db_connection_uri
-    API_KEY=your_api_key_here
+
    ```
-3. Clone the repository:
+3. Clone the repository(both client and server):
 
    ```bash
-   git clone https://github.com/mhrafi21/backend-car-rental-reservation.git
+   git clone https://github.com/mhrafi21/campers-shop.git
 
    ```
 
