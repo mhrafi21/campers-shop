@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setSearchQuery,
@@ -12,6 +12,8 @@ import { useGetProductsQuery } from "../../redux/baseApi";
 import DefaultContainer from "../../components/DefaultContainer";
 import { TProduct } from "../../interfaces";
 import ProductsList from "../../components/ProductsList";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const ProductsPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -91,6 +93,11 @@ const ProductsPage: React.FC = () => {
     dispatch(clearFilters());
   };
 
+  // useEffect to initialize AOS
+  useEffect(() => {
+    AOS.init({ once: true }); // Initialize once
+  }, []);
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <DefaultContainer>{isLoading && <div>Loading...</div>}</DefaultContainer>
@@ -125,7 +132,7 @@ const ProductsPage: React.FC = () => {
             <select
               value={selectedCategory}
               onChange={handleCategoryChange}
-              className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0"
+              className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">All Categories</option>
               <option value="camping-tent">Camping Tent</option>
@@ -148,7 +155,7 @@ const ProductsPage: React.FC = () => {
             <select
               value={`${priceRange.min}-${priceRange.max}`}
               onChange={handlePriceRangeChange}
-              className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0"
+              className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="0-12000000">Select Price Range</option>
               <option value="0-50">Up to $50</option>
@@ -165,7 +172,7 @@ const ProductsPage: React.FC = () => {
             <select
               value={sortBy}
               onChange={handleSortChange}
-              className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0"
+              className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="asc">Price Low to High</option>
               <option value="desc">Price High to Low</option>
@@ -181,9 +188,10 @@ const ProductsPage: React.FC = () => {
           </div>
 
           {/* Product grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {products?.data?.map((product: TProduct) => (
-              <ProductsList key={product._id} product={product}></ProductsList>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 " >
+
+            { products?.data && products?.data.length === 0 ? <div>No Result Found!</div> :  products?.data?.map((product: TProduct) => (
+              <ProductsList key={product._id} product={product} ></ProductsList>
             ))}
           </div>
         </div>

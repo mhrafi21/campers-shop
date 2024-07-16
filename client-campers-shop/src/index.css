@@ -49,3 +49,12 @@ img:not(.fade) {
 .slick-next {
   right: 20px; /* Adjust right position */
 }
+
+/* HeroSection.css */
+.slick-dots li button:before {
+  color: blue;
+}
+
+.slick-dots li.slick-active button:before {
+  color: blue;
+}
