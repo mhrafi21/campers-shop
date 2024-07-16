@@ -14,6 +14,7 @@ import { TProduct } from "../../interfaces";
 import ProductsList from "../../components/ProductsList";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { FaSearch } from "react-icons/fa";
 
 const ProductsPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -103,24 +104,31 @@ const ProductsPage: React.FC = () => {
       <DefaultContainer>{isLoading && <div>Loading...</div>}</DefaultContainer>
       <DefaultContainer>
         <div className="py-8">
-          {/* searching */}
+
           <div className="">
             <form
               onSubmit={handleSearchChange}
-              className="flex items-center mb-2 md:mb-0"
+              className="flex"
             >
-              <input
+                <div className="relative w-full">
+                  <div>
+                  <FaSearch className="h-6 w-6 top-3 left-5 text-gray-400 absolute " />
+                  </div>
+                <input
                 type="text"
                 placeholder="Search products..."
                 name="search"
-                className="p-2 w-full md:w-1/2 border border-gray-300 rounded-md mr-4"
+                className="p-2.5 pl-16 w-full border  border-gray-300 rounded-md mr-4 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              <div className="absolute h-full right-0 top-0 bottom-0">
               <button
                 type="submit"
-                className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200"
+                className=" h-full px-5 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200"
               >
                 Search
               </button>
+              </div>
+                </div>
             </form>
           </div>
 
@@ -132,7 +140,7 @@ const ProductsPage: React.FC = () => {
             <select
               value={selectedCategory}
               onChange={handleCategoryChange}
-              className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="p-2.5 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">All Categories</option>
               <option value="camping-tent">Camping Tent</option>
@@ -155,7 +163,7 @@ const ProductsPage: React.FC = () => {
             <select
               value={`${priceRange.min}-${priceRange.max}`}
               onChange={handlePriceRangeChange}
-              className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="p-2.5 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="0-12000000">Select Price Range</option>
               <option value="0-50">Up to $50</option>
@@ -172,7 +180,7 @@ const ProductsPage: React.FC = () => {
             <select
               value={sortBy}
               onChange={handleSortChange}
-              className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="p-2.5 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="asc">Price Low to High</option>
               <option value="desc">Price High to Low</option>
@@ -181,7 +189,7 @@ const ProductsPage: React.FC = () => {
             {/* Clear Filters */}
             <button
               onClick={handleClearFilters}
-              className="p-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition duration-200"
+              className="p-2.5 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition duration-200"
             >
               Clear Filters
             </button>
