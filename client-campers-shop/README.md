@@ -57,14 +57,13 @@ Campers Shop is designed to cater to the needs of camping enthusiasts by offerin
 
 ## Technology Stack
 
+- JavaScript
 - React
+- CSS
 - Redux & RTK query
 - Typescript
 - tailwind CSS
-- Express.js
-- Node.js
-- Mongoose
-- MongoDB
+- and other packages
 
 ## Installation Guideline
 
@@ -75,12 +74,11 @@ Make sure you have the following installed on your machine:
 
 - [Node.js](https://nodejs.org/en/)
 - [npm](https://www.npmjs.com/)
-- [MongoDB](https://www.mongodb.com/)
+
 
 ### Installation Steps
 
 1. Step-by-step instructions on how to install the project.
-2. Provide code examples or commands for clarity.
 
 ### Configuration
 
@@ -90,12 +88,11 @@ Make sure you have the following installed on your machine:
    ```bash
     PORT=3000
     DB_URL=your_db_connection_uri
-    API_KEY=your_api_key_here
    ```
-3. Clone the repository:
+3. Clone the repository(both client and server ):
 
    ```bash
-   git clone https://github.com/mhrafi21/backend-car-rental-reservation.git
+   git clone gh repo clone mhrafi21/campers-shop
 
    ```
 
@@ -113,14 +110,10 @@ Make sure you have the following installed on your machine:
 
    ```
 
-6 Running the Server:
-
-   Make sure MongoDB is running.
-
 7. Start the server:
 
    ```bash
-   npm run start:dev
+   npm run dev
    ```
 
 
