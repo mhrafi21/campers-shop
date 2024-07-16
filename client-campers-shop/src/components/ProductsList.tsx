@@ -1,5 +1,5 @@
 import React from "react";
-import { TProduct } from "../interfaces"; // Assuming TProduct is defined in this file
+import { TProduct } from "../interfaces"; 
 import { Link } from "react-router-dom";
 
 const ProductsList: React.FC<{ product: TProduct }> = ({ product }) => {

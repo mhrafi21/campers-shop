@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         path: "/success",
         element: <SuccessPage />,
       },
-      // Add more routes here as needed, e.g., /contact, /products, etc.
+
       {
         path: "/about-us",
         element: <AboutUsPage />,

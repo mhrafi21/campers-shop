@@ -26,9 +26,6 @@ export type TCartsProps = {
 // Define the TProduct type
 export type TProductCart = {
   price: number;
-  stockQuantity: number; // Add the missing field
+  stockQuantity: number; 
 };
 
-// Define the TCartsProps type
-
-// Define the TCartItem type
