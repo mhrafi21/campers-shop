@@ -13,23 +13,21 @@ Campers Shop is designed to cater to the needs of camping enthusiasts by offerin
 ## Features
 
 - **Homepage:** 
-  - Navbar with essential links and icons
-  - Hero section
-  - Best Selling/Recommended Products section with a "View More" button
+
+  - Best Selling/Recommended Products section
   - Categories section 
   - Featured Products section
-  - Unique section for video blogs, testimonials, or tour groups
   - FAQ section
   - Footer with contact information and social media links
 
 - **Products Page:**
   - Product listings in a grid view
   - Product details button
-  - Search bar, category and price range filters, sorting options, and a clear button
+  - Advanced Search bar, category and price range filters, sorting options, and a clear button.
 
 - **Product Details Page:**
   - Display product name, price, stock quantity, description, category, ratings, and images
-  - multiple images showing with Sider;
+  - multiple images showing with Sider
   - Add to Cart button with stock management
 
 - **Product Management:**

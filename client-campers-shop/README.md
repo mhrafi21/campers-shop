@@ -84,35 +84,29 @@ Make sure you have the following installed on your machine:
 
 ### Configuration
 
-1. Create a `.env` file in the root directory of the project.
-2. Add necessary configuration variables in the `.env` file.
-   Example:
-   ```bash
-    PORT=3000
-    DB_URL=your_db_connection_uri
-   ```
-3. Clone the repository(both client and server ):
+
+1. Clone the repository(both client and server ):
 
    ```bash
    git clone gh repo clone mhrafi21/campers-shop
 
    ```
 
-4. Navigate to the project directory:
+2. Navigate to the project directory:
 
    ```bash
    cd project-name
 
    ```
 
-5. Install dependencies:
+3. Install dependencies:
 
    ```bash
    npm install
 
    ```
 
-7. Start the server:
+4. Start the server:
 
    ```bash
    npm run dev

@@ -60,7 +60,7 @@ const AboutUsPage: React.FC = () => {
             </p>
           </div>
 
-          <div>
+          <div className="mb-8">
             <h3 className="text-2xl font-semibold mb-4">Meet Our Team</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
               <div className="bg-white rounded-lg overflow-hidden shadow-md p-4">
