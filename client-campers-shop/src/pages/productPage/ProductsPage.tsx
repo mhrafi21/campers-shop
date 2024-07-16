@@ -128,19 +128,20 @@ const ProductsPage: React.FC = () => {
               className="p-2 border border-gray-300 rounded-md mr-4 mb-2 md:mb-0"
             >
               <option value="">All Categories</option>
-              <option value="Camping Tent">Camping Tent</option>
-              <option value="Backpack">Backpack</option>
-              <option value="Sleeping Bag">Sleeping Bag</option>
-              <option value="Camping Stove">Camping Stove</option>
-              <option value="Camping Chair">Camping Chair</option>
-              <option value="Lantern">Lantern</option>
-              <option value="Hiking Boots">Hiking Boots</option>
-              <option value="Camping Cookware">Camping Cookware</option>
-              <option value="Water Bottle">Water Bottle</option>
-              <option value="First Aid Kit">First Aid Kit</option>
-              <option value="Camping Hammock">Camping Hammock</option>
-              <option value="Camping Cooler">Camping Cooler</option>
-              <option value="Camping Knife">Camping Knife</option>
+              <option value="camping-tent">Camping Tent</option>
+              <option value="backpack">Backpack</option>
+              <option value="sleeping-bag">Sleeping Bag</option>
+              <option value="portable-stove">Portable Stove</option>
+              <option value="camping-chair">Camping Chair</option>
+              <option value="lantern">Lantern</option>
+              <option value="hiking-boots">Hiking Boots</option>
+              <option value="camping-cookware">Camping Ware</option>
+              <option value="water-bottle">Water Bottle</option>
+              <option value="first-aid-kit">First Aid Kit</option>
+              <option value="camping-hammock">Camping Hammock</option>
+              <option value="camping-cooler">Camping Cooler</option>
+              <option value="outdoor-clothing">Outdoor Clothing</option>
+              <option value="camping-knife">Camping Knife</option>
             </select>
 
             {/* Price Range */}
