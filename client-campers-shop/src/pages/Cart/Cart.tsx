@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import DefaultContainer from "../../components/DefaultContainer";
 import Title from "../../components/Title";
 
+
 const Cart: React.FC = () => {
 
   const { data: cartItems, isLoading, error } = useGetAllCartsQuery(undefined);
@@ -23,7 +24,7 @@ const Cart: React.FC = () => {
     quantity: number,
     stock: TProduct
   ) => {
-    if (quantity > stock?.stockQuantity) {
+    if (quantity >= stock?.stockQuantity) {
       toast.error("Not enough stock");
     } else {
       await updateCartItem({ productId, quantity: quantity + 1 });
@@ -147,7 +148,7 @@ const Cart: React.FC = () => {
                   </div>
                   {cartItems?.data?.some(
                     (item: TCartsProps) =>
-                      item?.product.stockQuantity < item.quantity
+                      item?.product.stockQuantity <= item.quantity
                   ) ? (
                     <button className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded cursor-not-allowed opacity-50">
                       Place order

@@ -12,8 +12,8 @@ import { useGetProductsQuery } from "../../redux/baseApi";
 import DefaultContainer from "../../components/DefaultContainer";
 import { TProduct } from "../../interfaces";
 import ProductsList from "../../components/ProductsList";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { FaSearch } from "react-icons/fa";
 
 const ProductsPage: React.FC = () => {
@@ -101,34 +101,29 @@ const ProductsPage: React.FC = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <DefaultContainer>{isLoading && <div>Loading...</div>}</DefaultContainer>
       <DefaultContainer>
         <div className="py-8">
-
           <div className="">
-            <form
-              onSubmit={handleSearchChange}
-              className="flex"
-            >
-                <div className="relative w-full">
-                  <div>
+            <form onSubmit={handleSearchChange} className="flex">
+              <div className="relative w-full">
+                <div>
                   <FaSearch className="h-6 w-6 top-3 left-5 text-gray-400 absolute " />
-                  </div>
-                <input
-                type="text"
-                placeholder="Search products..."
-                name="search"
-                className="p-2.5 pl-16 w-full border  border-gray-300 rounded-md mr-4 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <div className="absolute h-full right-0 top-0 bottom-0">
-              <button
-                type="submit"
-                className=" h-full px-5 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200"
-              >
-                Search
-              </button>
-              </div>
                 </div>
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  name="search"
+                  className="p-2.5 pl-16 w-full border  border-gray-300 rounded-md mr-4 hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <div className="absolute h-full right-0 top-0 bottom-0">
+                  <button
+                    type="submit"
+                    className=" h-full px-5 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200"
+                  >
+                    Search
+                  </button>
+                </div>
+              </div>
             </form>
           </div>
 
@@ -196,11 +191,18 @@ const ProductsPage: React.FC = () => {
           </div>
 
           {/* Product grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 " >
-
-            { products?.data && products?.data.length === 0 ? <div>No Result Found!</div> :  products?.data?.map((product: TProduct) => (
-              <ProductsList key={product._id} product={product} ></ProductsList>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 ">
+            {isLoading && <div>Loading...</div>}
+            {products?.data && products?.data.length === 0 ? (
+              <div>No Result Found!</div>
+            ) : (
+              products?.data?.map((product: TProduct) => (
+                <ProductsList
+                  key={product._id}
+                  product={product}
+                ></ProductsList>
+              ))
+            )}
           </div>
         </div>
       </DefaultContainer>

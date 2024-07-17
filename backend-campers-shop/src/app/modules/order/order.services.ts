@@ -20,9 +20,9 @@ const createOrderIntoDB = async (payload: TOrder) => {
         throw new AppError(httpStatus.BAD_REQUEST, 'Not enough stock')
       } else {
         product.stockQuantity -= item.quantity
-        await product?.save()
         const result = await Order.create(payload)
-        await Cart.findByIdAndDelete(item?._id)
+        await Cart.findByIdAndDelete(item._id)
+        await product.save()
         return result
       }
     }

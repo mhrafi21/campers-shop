@@ -3,13 +3,26 @@ import { Link } from 'react-router-dom';
 import { FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 import { CSSTransition } from 'react-transition-group';
 import DefaultContainer from '../DefaultContainer';
+import { useGetAllCartsQuery } from '../../redux/baseApi';
+import { TProduct } from '../../interfaces';
 
+type TSum = {
+  id: number,
+  product: TProduct,
+  quantity: number,
+}
 
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [ ,setIsScrolled] = useState(false);
   const [navHeight, setNavHeight] = useState(80); // Default height
+  const {data} = useGetAllCartsQuery(undefined);
+ 
+  const sumQuantity = () => {
+    return data?.data.reduce((total : number, item : TSum) => total + item.quantity,0)
+
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,10 +59,12 @@ const NavBar: React.FC = () => {
           <Link to="/about-us" className="hover:text-gray-400">About Us</Link>
           <Link to="/product" className="hover:text-gray-400">Products Page</Link>
           <Link to="/product-management" className="hover:text-gray-400">Product Management</Link>
-          <Link to="/cart" className="hover:text-gray-400 flex items-center">
-            <FaShoppingCart className="mr-1" />
-            Cart
+         <div className='block relative'>
+         <Link to="/cart" className="hover:text-gray-400">
+            <FaShoppingCart className="mr-1 text-2xl" />
+            <span  className=" absolute border text-gray-500 bg-white h-6 w-6 -top-3 -right-2 text-center  rounded-full">{sumQuantity()}</span>
           </Link>
+         </div>
         </div>
         <div className="md:hidden">
           <button onClick={toggleMenu}>
@@ -64,9 +79,9 @@ const NavBar: React.FC = () => {
           <Link to="/product" className="block hover:text-gray-400">Products Page</Link>
           <Link to="/product-management" className="block hover:text-gray-400">Product Management</Link>
       
-          <Link to="/cart" className="hover:text-gray-400 flex items-center">
-            <FaShoppingCart className="mr-1" />
-            Cart
+          <Link to="/cart" className="hover:text-gray-400 flex items-center relative">
+            <FaShoppingCart className="mr-1 text-2xl" />
+            <span  className=" absolute border text-gray-500 bg-white h-6 w-6 -top-3 left-3 text-center  rounded-full">{sumQuantity()}</span>
           </Link>
         </div>
       </CSSTransition>

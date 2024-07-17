@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TProduct } from "../../../interfaces";
 
 interface CartState {
+  quantity: number,
   items: TProduct[];
 }
 
 const initialState: CartState = {
+  quantity: 1,
   items: [],
 };
 

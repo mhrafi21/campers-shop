@@ -53,7 +53,7 @@ const FeaturedProducts = () => {
             {data?.data?.map((product: TProduct) => (
               <div className="pr-2">
                 <ProductsList
-                  key={product._id}
+                  key={Math.random()}
                   product={product}
                 ></ProductsList>
               </div>

@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 function App() {
   return (
     <div>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <RouterProvider router={router}></RouterProvider>;
     </div>
   );

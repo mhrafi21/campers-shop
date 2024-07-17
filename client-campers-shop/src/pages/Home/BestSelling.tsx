@@ -51,7 +51,7 @@ const BestSelling = () => {
             {data?.data?.map((product: TProduct) => (
               <div className="pr-2">
                 <ProductsList
-                  key={Math.random()}
+                key={Math.random()}
                   product={product}
                 ></ProductsList>
               </div>

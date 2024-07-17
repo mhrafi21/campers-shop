@@ -93,7 +93,7 @@ export const baseApi = createApi({
         url: `/carts/${cartId}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Carts", id: "LIST" }],
+      invalidatesTags: [{ type: "Carts" }],
     }),
     updateCart: builder.mutation({
       query: (cart) => {

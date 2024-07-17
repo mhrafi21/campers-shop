@@ -60,14 +60,9 @@ const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
 
 
       const res = await addToCart({product: id, quantity: 1 }).unwrap();
-      if(res?.success){
+      if(res?.success === true){
         toast.success("Add to cart successfully added!")
       }
-    
-
-
-    
-    
   };
 
   return (
@@ -116,7 +111,7 @@ const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
           </div>
           <div className="">
             {
-              product.stockQuantity < cartQuantity ? <button  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+               product && product?.stockQuantity === 0 || product.stockQuantity < cartQuantity + 1 ? <button  className="bg-gray-500 cursor-not-allowed text-white px-4 py-2 rounded-md">
               Add To cart
             </button> : 
             <button onClick={() => handleAddToCart(product._id as string)} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
