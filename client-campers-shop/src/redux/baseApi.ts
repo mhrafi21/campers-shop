@@ -132,7 +132,7 @@ export const baseApi = createApi({
           body: orderData,
         };
       },
-      invalidatesTags: [{ type: "Carts" }],
+      invalidatesTags: [{ type: "Products" }],
     }),
   }),
 });

@@ -3,18 +3,19 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { TProduct } from "../../interfaces";
-import { useCreateCartProductMutation } from "../../redux/baseApi";
+import {
+  useCreateCartProductMutation,
+  useGetAllCartsQuery,
+} from "../../redux/baseApi";
 import toast from "react-hot-toast";
 
 const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
+  const { data, isLoading } = useGetAllCartsQuery(undefined);
+  console.log(data?.data);
 
+  const cartProduct = data?.data.find((item: TProduct) => item);
 
-  const [addToCart, {data,isLoading}] = useCreateCartProductMutation(undefined);
-
-  const cartQuantity = data?.data?.quantity;
-
-  console.log(cartQuantity, product.stockQuantity)
-
+  const [addToCart] = useCreateCartProductMutation(undefined);
 
   const sliderRef = useRef<Slider>(null);
 
@@ -52,17 +53,15 @@ const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
     }
   }, []);
 
+  // add to cart
 
-  // add to cart 
-
-  const handleAddToCart = async(id : string) => {
+  const handleAddToCart = async (id: string) => {
     // TODO: Implement adding product to cart logic
 
-
-      const res = await addToCart({product: id, quantity: 1 }).unwrap();
-      if(res?.success === true){
-        toast.success("Add to cart successfully added!")
-      }
+    const res = await addToCart({ product: id, quantity: 1 }).unwrap();
+    if (res?.success === true) {
+      toast.success("Add to cart successfully added!");
+    }
   };
 
   return (
@@ -96,7 +95,13 @@ const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
           <h2 className="text-3xl font-semibold mb-4">{product.name}</h2>
           <div className="flex mb-4">
             <span className="text-gray-600 mr-2">Stock:</span>
-            {product.stockQuantity > 0 ? <span className="text-green-600">In Stock({product.stockQuantity})</span>: <span className="text-red-700">Out Of Stock</span>}
+            {product.stockQuantity > 0 ? (
+              <span className="text-green-600">
+                In Stock({product.stockQuantity})
+              </span>
+            ) : (
+              <span className="text-red-700">Out Of Stock</span>
+            )}
           </div>
           <div className="flex mb-4">
             <span className="text-gray-600 mr-2">Ratings:</span>
@@ -110,14 +115,19 @@ const ProductDetail: React.FC<{ product: TProduct }> = ({ product }) => {
             </span>
           </div>
           <div className="">
-            {
-               product && product?.stockQuantity === 0 || product.stockQuantity < cartQuantity + 1 ? <button  className="bg-gray-500 cursor-not-allowed text-white px-4 py-2 rounded-md">
-              Add To cart
-            </button> : 
-            <button onClick={() => handleAddToCart(product._id as string)} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+            {(product && product?.stockQuantity === 0) ||
+            product.stockQuantity === cartProduct?.quantity ? (
+              <button className="bg-gray-500 cursor-not-allowed text-white px-4 py-2 rounded-md">
+                Add To cart
+              </button>
+            ) : (
+              <button
+                onClick={() => handleAddToCart(product._id as string)}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+              >
                 {isLoading ? <div>Loading...</div> : "Add to Cart"}
               </button>
-            }
+            )}
           </div>
         </div>
       </div>

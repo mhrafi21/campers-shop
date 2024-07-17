@@ -52,7 +52,11 @@ const Cart: React.FC = () => {
     });
 
     if (result.isConfirmed) {
-      await removeCartItem(productId);
+      const res = await removeCartItem(productId).unwrap();
+      if(res.success === true){
+        Swal.fire("Deleted!", `${res?.message}`, "success");
+      }
+
     }
   };
 
