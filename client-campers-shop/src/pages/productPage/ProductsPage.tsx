@@ -15,6 +15,12 @@ import ProductsList from "../../components/ProductsList";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaSearch } from "react-icons/fa";
+import { useAppSelector } from "../../redux/hooks";
+import {
+  setCurrentPage,
+  setTotalPages,
+} from "../../redux/features/products/paginationSlice";
+import Pagination from "../../components/Pagination";
 
 const ProductsPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -30,13 +36,29 @@ const ProductsPage: React.FC = () => {
   );
   const sortBy = useSelector((state: RootState) => state.products.sortBy);
 
+  const { currentPage, totalPages } = useAppSelector(
+    (state: RootState) => state.pagination
+  );
+
   const { data: products, isLoading } = useGetProductsQuery({
     search: searchQuery,
     category: selectedCategory,
     minPrice: priceRange.min.toString(),
     maxPrice: priceRange.max.toString(),
     sort: sortBy,
+    page: currentPage,
+    limit: 10,
   });
+
+  useEffect(() => {
+    if (products) {
+      dispatch(setTotalPages(products?.data?.totalPages));
+    }
+  }, [products, dispatch]);
+
+  const handlePageChange = (page: number) => {
+    dispatch(setCurrentPage(page));
+  };
 
   const handleSearchChange = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -196,7 +218,7 @@ const ProductsPage: React.FC = () => {
             {products?.data && products?.data.length === 0 ? (
               <div>No Result Found!</div>
             ) : (
-              products?.data?.map((product: TProduct) => (
+              products?.data?.products.map((product: TProduct) => (
                 <ProductsList
                   key={product._id}
                   product={product}
@@ -205,6 +227,11 @@ const ProductsPage: React.FC = () => {
             )}
           </div>
         </div>
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        ></Pagination>
       </DefaultContainer>
     </div>
   );

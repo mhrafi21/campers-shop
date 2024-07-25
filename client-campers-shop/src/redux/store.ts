@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit"
 import { baseApi } from "./baseApi";
 import productsReducer from "../redux/features/products/productsSlice"
 import cartReducer from "../redux/features/products/cartSlice"
+import paginationReducer from "../redux/features/products/paginationSlice"
 export const store = configureStore({
     reducer: {
         [baseApi.reducerPath]: baseApi.reducer,
         products: productsReducer,
-        cart: cartReducer
+        cart: cartReducer,
+        pagination: paginationReducer
     }, // Your root reducer goes here. Replace with your actual reducer.
 
     middleware: (getDefaultMiddleware) =>

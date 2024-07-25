@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 const ProductManagement: React.FC<{ products: TProduct[] }> = ({
   products,
 }) => {
+
   const [deleteProduct] = useDeleteSingleProductMutation(undefined);
   const [deleteImage] = useUpdateProductByIdMutation(undefined);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
@@ -18,6 +19,7 @@ const ProductManagement: React.FC<{ products: TProduct[] }> = ({
     null
   );
   const [isCreating, setIsCreating] = useState<boolean>(false);
+
 
   const handleDeleteProduct = async (productId: string) => {
     try {
@@ -130,7 +132,7 @@ const ProductManagement: React.FC<{ products: TProduct[] }> = ({
           </thead>
           <tbody>
             {products &&
-              products?.map((product: TProduct) => (
+              products.map((product: TProduct) => (
                 <tr key={Math.random()}>
                   <td className="py-2 px-4 border-b">{product.name}</td>
                   <td className="py-2 px-4 border-b">
@@ -187,6 +189,7 @@ const ProductManagement: React.FC<{ products: TProduct[] }> = ({
               ))}
           </tbody>
         </table>
+
       </div>
       {/* Delete confirmation modal */}
       {/* Update product modal */}

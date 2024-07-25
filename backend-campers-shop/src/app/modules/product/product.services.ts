@@ -9,11 +9,10 @@ const createProductIntoDB = async (payload: TProduct) => {
 }
 
 const getProductsFromDB = async (query: Record<string, unknown>) => {
-
   try {
-    const { search, category, minPrice, maxPrice, sort } = query;
+    const { search, category, minPrice, maxPrice, sort, page = 1, limit = 10 } = query
 
-    let filterQuery = {};
+    let filterQuery = {}
 
     // Searching product using product name or description
     if (search) {
@@ -22,48 +21,59 @@ const getProductsFromDB = async (query: Record<string, unknown>) => {
           { name: { $regex: search, $options: 'i' } },
           { description: { $regex: search, $options: 'i' } },
         ],
-      };
+      }
     }
 
     // Filter by price - min to max
     if (minPrice || maxPrice) {
       if (minPrice && !maxPrice) {
-        filterQuery = { ...filterQuery, price: { $gte: Number(minPrice) } };
+        filterQuery = { ...filterQuery, price: { $gte: Number(minPrice) } }
       }
       if (!minPrice && maxPrice) {
-        filterQuery = { ...filterQuery, price: { $lte: Number(maxPrice) } };
+        filterQuery = { ...filterQuery, price: { $lte: Number(maxPrice) } }
       }
       if (minPrice && maxPrice) {
         filterQuery = {
           ...filterQuery,
           price: { $gte: Number(minPrice), $lte: Number(maxPrice) },
-        };
+        }
       }
     }
 
     // Filter by category
     if (category) {
-      filterQuery = { ...filterQuery, category };
+      filterQuery = { ...filterQuery, category }
     }
 
     // Sorting the products by price
-    let sortOption = {};
+    let sortOption = {}
 
     if (sort) {
-      sortOption = sort === 'asc' ? { price: 1 } : { price: -1 };
+      sortOption = sort === 'asc' ? { price: 1 } : { price: -1 }
     }
 
-    const products = await Product.find(filterQuery).sort(sortOption);
-    return products
+    // pagination 
+
+    const limitNum = Number(limit);
+    const skipNum = (Number(page) - 1) * Number(limit);
+
+    const count = await Product.countDocuments();
+    const totalPages = Math.ceil(count / Number(limit));
+
+    const products = await Product.find(filterQuery).sort(sortOption).limit(limitNum).skip(skipNum);
+
+    return {
+      products,
+      totalPages
+    }
+
   } catch (error) {
-    console.error('Error fetching products:', error);
-    
+    console.error('Error fetching products:', error)
   }
 }
 
 const getSingleProductFromDB = async (productId: string) => {
-  
-  const result = await Product.findById(productId);
+  const result = await Product.findById(productId)
   if (!result) {
     throw new AppError(httpStatus.NOT_FOUND, 'No data found')
   }
@@ -100,20 +110,17 @@ const updateSingleProductFromDB = async (
   if (category !== undefined) product.category = category
   if (ratings !== undefined) product.ratings = ratings
 
-
   // Merge existing images with new images
-  
-if(images){
-  const isExists = product?.images.find(image => images?.includes(image))
 
-  if(isExists){
-    console.log("Already Exists")
-  }else{
-    product.images = [...product.images, ...images]
+  if (images) {
+    const isExists = product?.images.find(image => images?.includes(image))
+
+    if (isExists) {
+      console.log('Already Exists')
+    } else {
+      product.images = [...product.images, ...images]
+    }
   }
-
-}
-
 
   if (deleteImages && Array.isArray(deleteImages)) {
     product.images = product.images.filter(

@@ -12,7 +12,6 @@ const CategoryProduct: React.FC = () => {
     category: categoryName,
   });
 
-  console.log(products);
   return (
     <div className="py-12">
       <DefaultContainer>
@@ -20,7 +19,7 @@ const CategoryProduct: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {isLoading
             ? "Loading..."
-            : products?.data.map((product: TProduct) => (
+            : products?.data?.products.map((product: TProduct) => (
                 <ProductsList
                   key={product._id}
                   product={product}

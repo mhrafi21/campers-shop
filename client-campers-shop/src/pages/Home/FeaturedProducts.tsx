@@ -50,7 +50,7 @@ const FeaturedProducts = () => {
             Featured Products
           </h2>
           <Slider {...settings}>
-            {data?.data?.map((product: TProduct) => (
+            {data?.data?.products.map((product: TProduct) => (
               <div className="pr-2">
                 <ProductsList
                   key={Math.random()}
