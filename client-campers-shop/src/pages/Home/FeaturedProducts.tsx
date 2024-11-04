@@ -9,9 +9,7 @@ import ProductsList from "../../components/ProductsList";
 
 const FeaturedProducts = () => {
   const { data } = useGetProductsQuery(undefined);
-
-  console.log(data?.data);
-
+  
   const settings = {
     infinite: true,
     speed: 500,
@@ -50,7 +48,7 @@ const FeaturedProducts = () => {
             Featured Products
           </h2>
           <Slider {...settings}>
-            {data?.data?.products.map((product: TProduct) => (
+            {data?.data?.products?.map((product: TProduct) => (
               <div className="pr-2">
                 <ProductsList
                   key={Math.random()}

@@ -20,12 +20,11 @@ export type UpdateCartMutationResult =
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://backend-campers-shop.vercel.app/api/v1" }),
   tagTypes: ["Products", "Carts"],
   endpoints: (builder) => ({
     createProduct: builder.mutation({
       query: (product) => {
-        console.log(product);
         return {
           url: "/products/create-product",
           method: "POST",

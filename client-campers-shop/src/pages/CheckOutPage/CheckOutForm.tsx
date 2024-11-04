@@ -52,16 +52,14 @@ const CheckoutForm: React.FC = () => {
       address: data?.address,
       data: CartData?.data,
     };
-  
+
     // Corrected line:
     const res = await addToOrder(orderInfo).unwrap();
-  
-    if(res?.success === true) {
-      toast.success("Order created Successfully")
+
+    if (res?.success === true) {
+      toast.success("Order created Successfully");
       navigate("/success");
     }
-  
-    
   };
 
   return (

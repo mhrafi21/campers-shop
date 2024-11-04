@@ -218,9 +218,9 @@ const ProductsPage: React.FC = () => {
             {products?.data && products?.data.length === 0 ? (
               <div>No Result Found!</div>
             ) : (
-              products?.data?.products.map((product: TProduct) => (
+              products?.data?.products?.map((product: TProduct, index : number) => (
                 <ProductsList
-                  key={product._id}
+                  key={index}
                   product={product}
                 ></ProductsList>
               ))

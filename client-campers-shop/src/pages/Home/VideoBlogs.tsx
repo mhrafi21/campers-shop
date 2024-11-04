@@ -47,7 +47,7 @@ const TourGroupsSection: React.FC = () => {
         <div className="">
         <h2 className="text-3xl font-bold mb-8 text-center">Explore Our Tour Groups</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tourGroups.map((group) => (
+          {tourGroups?.map((group) => (
             <div
               key={group.id}
               className="border border-gray-300 transition-all rounded-lg overflow-hidden"
